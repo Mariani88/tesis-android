@@ -47,6 +47,15 @@ class CoordinatesAdapterServiceTest {
         thenAdaptWithValue(0.5)
     }
 
+    @Test
+    fun adaptSecondCoordinateToGoogleMapsCoordinatesShouldDivideFor3600(){
+        givenACoordinate(second = 36f)
+
+        whenAdaptToGoogleMapCoordinate()
+
+        thenAdaptWithValue(0.01)
+    }
+
     private fun thenAdaptWithValue(expectedGoogleMapsCoordinate: Double) {
         Assert.assertNotNull(googleMapsCoordinate)
         Assert.assertEquals(expectedGoogleMapsCoordinate, googleMapsCoordinate)
