@@ -34,10 +34,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
+        val long = intent.getDoubleExtra("LONG", 0.0)
+        val lat = intent.getDoubleExtra("LAT", 0.0)
         mMap = googleMap
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val myHome = LatLng(lat, long)
+        mMap.addMarker(MarkerOptions().position(myHome).title("Marker in My Home"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myHome, 14f))
     }
 }
