@@ -38,6 +38,14 @@ class CoordinatesAdapterServiceTest {
         thenAdaptWithValue(degree.toDouble())
     }
 
+    @Test
+    fun adaptMinuteCoordinateToGoogleMapsCoordinatesShouldBeLowerThan1AndCorrect(){
+        givenACoordinate(minute = 30)
+
+        whenAdaptToGoogleMapCoordinate()
+
+        thenAdaptWithValue(0.5)
+    }
 
     private fun thenAdaptWithValue(expectedGoogleMapsCoordinate: Double) {
         Assert.assertNotNull(googleMapsCoordinate)
