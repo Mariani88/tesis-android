@@ -13,6 +13,7 @@ class CoordinatesAdapterServiceTest {
     private val zero = 0
     private lateinit var coordinatesAdapterService: CoordinatesAdapterService
     private var googleMapsCoordinate: Double? = null
+    private val degree = 40
 
     @Before
     fun setUp() {
@@ -28,6 +29,14 @@ class CoordinatesAdapterServiceTest {
         thenAdaptWithValue(0.toDouble())
     }
 
+    @Test
+    fun adaptDegreeCoordinateToGoogleMapsCoordinatesShouldBeEqualsDegree(){
+        givenACoordinate(degree = degree)
+
+        whenAdaptToGoogleMapCoordinate()
+
+        thenAdaptWithValue(degree.toDouble())
+    }
 
 
     private fun thenAdaptWithValue(expectedGoogleMapsCoordinate: Double) {
