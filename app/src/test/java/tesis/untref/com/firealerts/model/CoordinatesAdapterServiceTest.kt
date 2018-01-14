@@ -56,6 +56,15 @@ class CoordinatesAdapterServiceTest {
         thenAdaptWithValue(0.01)
     }
 
+    @Test
+    fun adaptCoordinateToGoogleMapsCoordinatesShouldSumAdaptedDegreeMinuteAndSecond(){
+        givenACoordinate(degree = degree, minute = 30, second = 36f)
+
+        whenAdaptToGoogleMapCoordinate()
+
+        thenAdaptWithValue(degree + 0.5 + 0.01)
+    }
+
     private fun thenAdaptWithValue(expectedGoogleMapsCoordinate: Double) {
         Assert.assertNotNull(googleMapsCoordinate)
         Assert.assertEquals(expectedGoogleMapsCoordinate, googleMapsCoordinate)
