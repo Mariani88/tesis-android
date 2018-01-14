@@ -65,6 +65,24 @@ class CoordinatesAdapterServiceTest {
         thenAdaptWithValue(degree + 0.5 + 0.01)
     }
 
+    @Test
+    fun adaptCoordinateWithWestCardinalPointToGoogleMapsCoordinatesReturnNegativeCoordinates(){
+        givenACoordinate(degree = degree, minute = 30, second = 36f, cardinalPoint = CardinalPoint.WEST)
+
+        whenAdaptToGoogleMapCoordinate()
+
+        thenAdaptWithValue(-(degree + 0.5 + 0.01))
+    }
+
+    @Test
+    fun adaptCoordinateWithSouthCardinalPointToGoogleMapsCoordinatesReturnNegativeCoordinates(){
+        givenACoordinate(degree = degree, minute = 30, second = 36f, cardinalPoint = CardinalPoint.SOUTH)
+
+        whenAdaptToGoogleMapCoordinate()
+
+        thenAdaptWithValue(-(degree + 0.5 + 0.01))
+    }
+
     private fun thenAdaptWithValue(expectedGoogleMapsCoordinate: Double) {
         Assert.assertNotNull(googleMapsCoordinate)
         Assert.assertEquals(expectedGoogleMapsCoordinate, googleMapsCoordinate)
