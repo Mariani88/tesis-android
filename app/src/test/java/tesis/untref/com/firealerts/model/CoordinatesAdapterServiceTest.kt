@@ -3,9 +3,9 @@ package tesis.untref.com.firealerts.model
 import junit.framework.Assert
 import org.junit.Before
 import org.junit.Test
-import tesis.untref.com.firealerts.view.model.CardinalPoint
-import tesis.untref.com.firealerts.view.model.Coordinate
-import tesis.untref.com.firealerts.view.model.CoordinatesAdapterService
+import tesis.untref.com.firealerts.model.CardinalPoint
+import tesis.untref.com.firealerts.model.Coordinate
+import tesis.untref.com.firealerts.model.CoordinatesAdapterService
 
 class CoordinatesAdapterServiceTest {
 

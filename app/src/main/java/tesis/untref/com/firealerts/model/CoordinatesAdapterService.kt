@@ -1,4 +1,4 @@
-package tesis.untref.com.firealerts.view.model
+package tesis.untref.com.firealerts.model
 
 class CoordinatesAdapterService {
 
