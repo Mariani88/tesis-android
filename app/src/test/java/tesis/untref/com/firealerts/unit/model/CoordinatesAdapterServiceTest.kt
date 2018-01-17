@@ -1,4 +1,4 @@
-package tesis.untref.com.firealerts.model
+package tesis.untref.com.firealerts.unit.model
 
 import junit.framework.Assert
 import org.junit.Before
