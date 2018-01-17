@@ -9,7 +9,7 @@ import tesis.untref.com.firealerts.infrastructure.sqlite.entity.AlertEntity
 interface AlertDao {
 
     @Insert
-    fun insertAll(vararg alertEntity: AlertEntity)
+    fun insertAll(vararg alertEntities: AlertEntity)
 
     @Query("SELECT * FROM alerts WHERE id = (: alertId)  ")
     fun findById(alertId: Long): AlertEntity
