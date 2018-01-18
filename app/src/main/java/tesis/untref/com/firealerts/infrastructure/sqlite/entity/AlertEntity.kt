@@ -10,21 +10,21 @@ import java.util.*
 @Entity(tableName = "alerts")
 class AlertEntity (
 
-        @PrimaryKey
-        private var id: Long,
+        @PrimaryKey(autoGenerate = true)
+        var id: Long? = null,
 
         @Embedded
-        private var latitude: CoordinateEntity,
+        var latitude: LatitudeEntity? = null,
 
         @Embedded
-        private var longitude: CoordinateEntity,
+        var longitude: LongitudeEntity? = null,
 
         @ColumnInfo(name = "date")
-        private var date: Date
+        var date: Long? = null
 ) {
 
-    constructor(alert: Alert): this(alert.id, CoordinateEntity(alert.latitude), CoordinateEntity(alert.longitude), alert.date)
+    constructor(alert: Alert): this(alert.id, LatitudeEntity(alert.latitude), LongitudeEntity(alert.longitude), alert.date.time)
 
-    fun toAlert(): Alert = Alert(id, latitude.toCoordinate(),  longitude.toCoordinate(), date)
+    fun toAlert(): Alert = Alert(id!!, latitude!!.toCoordinate(),  longitude!!.toCoordinate(), Date(date!!))
 
 }

@@ -11,6 +11,6 @@ interface AlertDao {
     @Insert
     fun insertAll(vararg alertEntities: AlertEntity)
 
-    @Query("SELECT * FROM alerts WHERE id = (: alertId)  ")
+    @Query("SELECT * FROM alerts WHERE id = :arg0")
     fun findById(alertId: Long): AlertEntity
 }

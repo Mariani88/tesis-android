@@ -5,15 +5,17 @@ import tesis.untref.com.firealerts.model.CardinalPoint
 import tesis.untref.com.firealerts.model.Coordinate
 
 
-class CoordinateEntity(
-        private var degree: Int,
-        private var minute: Int,
-        private var second: Float,
+class LatitudeEntity(
+        var degree: Int? = null,
+        var minute: Int? = null,
+        var second: Float? = null,
 
         @ColumnInfo(name = "cardinal_point")
-        private var cardinalPoint: String
+        var cardinalPoint: String? = null
 ) {
     constructor(coordinate: Coordinate) : this(coordinate.degree, coordinate.minute, coordinate.second, coordinate.cardinalPoint.name)
 
-    fun toCoordinate(): Coordinate = Coordinate(degree, minute, second, CardinalPoint.valueOf(cardinalPoint))
+    constructor(): this(null, null, null,null)
+
+    fun toCoordinate(): Coordinate = Coordinate(degree!!, minute!!, second!!, CardinalPoint.valueOf(cardinalPoint!!))
 }
