@@ -11,6 +11,7 @@ import org.junit.Test
 import tesis.untref.com.firealerts.infrastructure.sqlite.dao.AlertDao
 import tesis.untref.com.firealerts.infrastructure.sqlite.dao.AlertDataBase
 import tesis.untref.com.firealerts.infrastructure.sqlite.entity.AlertEntity
+import tesis.untref.com.firealerts.infrastructure.sqlite.entity.CoordinateEntity
 import tesis.untref.com.firealerts.infrastructure.sqlite.entity.LatitudeEntity
 import tesis.untref.com.firealerts.infrastructure.sqlite.entity.LongitudeEntity
 import tesis.untref.com.firealerts.infrastructure.sqlite.repository.SQLiteAlertRepository
@@ -48,7 +49,7 @@ class SQLiteAlertRepositoryTest {
     fun insertAlertShouldStoreIt(){
         val latitude = LatitudeEntity(degree, minute, second, east)
         val longitude = LongitudeEntity(degree, minute, second, north)
-        val alertEntity = AlertEntity(alertId, latitude, longitude, Date().time)
+        val alertEntity = AlertEntity(alertId, CoordinateEntity( latitude, longitude), Date().time)
         inMemoryAlertDao.insertAll(alertEntity)
         val storedAlertEntity = inMemoryAlertDao.findById(alertId)
         Assert.assertEquals(alertId, storedAlertEntity.toAlert().id)
