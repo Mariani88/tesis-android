@@ -54,8 +54,7 @@ class SQLiteAlertRepositoryTest {
     }
 
     private fun thenFindIt() {
-        val storedAlertEntity = inMemoryAlertDao.findById(alertId)
-        Assert.assertEquals(alertId, storedAlertEntity.toAlert().id)
+        inMemoryAlertDao.findById(alertId).subscribe({Assert.assertEquals(it.toAlert().id, alertId) })
     }
 
     private fun whenStoreAlertEntity() {
