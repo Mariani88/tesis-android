@@ -1,8 +1,5 @@
 package tesis.untref.com.firealerts.model
 
-data class Coordinate(val degree: Int, val minute: Int, val second: Float, val cardinalPoint: CardinalPoint) {
+data class Coordinate(val latitude: Latitude, val longitude: Longitude) {
 
-    fun isSouth() = cardinalPoint == CardinalPoint.SOUTH
-
-    fun isWest() = cardinalPoint == CardinalPoint.WEST
 }

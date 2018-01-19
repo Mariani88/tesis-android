@@ -1,19 +1,21 @@
 package tesis.untref.com.firealerts.unit.model
 
+import com.google.android.gms.maps.model.LatLng
 import junit.framework.Assert
 import org.junit.Before
 import org.junit.Test
-import tesis.untref.com.firealerts.model.CardinalPoint
-import tesis.untref.com.firealerts.model.Coordinate
-import tesis.untref.com.firealerts.model.CoordinatesAdapterService
+import tesis.untref.com.firealerts.model.*
 
 class CoordinatesAdapterServiceTest {
 
     private lateinit var coordinate: Coordinate
     private val zero = 0
     private lateinit var coordinatesAdapterService: CoordinatesAdapterService
-    private var googleMapsCoordinate: Double? = null
+    private var googleMapsCoordinate: LatLng? = null
     private val degree = 40
+    private lateinit var latitude: Latitude
+    private lateinit var longitude: Longitude
+    private val origin = 0.0
 
     @Before
     fun setUp() {
@@ -21,78 +23,114 @@ class CoordinatesAdapterServiceTest {
     }
 
     @Test
-    fun adaptOriginCoordinateToGoogleMapsCoordinatesShouldBeEqualsZero(){
-        givenACoordinate()
+    fun adaptOriginCoordinateToGoogleMapsCoordinatesShouldBeEqualsZero() {
+        givenALatitude()
+        givenALongitude()
+        givenACoordinate(latitude, longitude)
 
         whenAdaptToGoogleMapCoordinate()
 
-        thenAdaptWithValue(0.toDouble())
+        thenAdaptWithValue(origin, origin)
     }
 
     @Test
-    fun adaptDegreeCoordinateToGoogleMapsCoordinatesShouldBeEqualsDegree(){
-        givenACoordinate(degree = degree)
+    fun adaptDegreeCoordinateToGoogleMapsCoordinatesShouldBeEqualsDegree() {
+        givenALatitude(degree = degree)
+        givenALongitude()
+        givenACoordinate(latitude, longitude)
 
         whenAdaptToGoogleMapCoordinate()
 
-        thenAdaptWithValue(degree.toDouble())
+        thenAdaptWithValue(degree.toDouble(), origin)
     }
 
     @Test
-    fun adaptMinuteCoordinateToGoogleMapsCoordinatesShouldBeLowerThan1AndCorrect(){
-        givenACoordinate(minute = 30)
+    fun adaptMinuteCoordinateToGoogleMapsCoordinatesShouldBeLowerThan1AndCorrect() {
+        givenALatitude(minute = 30)
+        givenALongitude()
+        givenACoordinate(latitude, longitude)
 
         whenAdaptToGoogleMapCoordinate()
 
-        thenAdaptWithValue(0.5)
+        thenAdaptWithValue(0.5, origin)
     }
 
     @Test
-    fun adaptSecondCoordinateToGoogleMapsCoordinatesShouldDivideFor3600(){
-        givenACoordinate(second = 36f)
+    fun adaptSecondCoordinateToGoogleMapsCoordinatesShouldDivideFor3600() {
+        givenALatitude(second = 36f)
+        givenALongitude()
+        givenACoordinate(latitude, longitude)
 
         whenAdaptToGoogleMapCoordinate()
 
-        thenAdaptWithValue(0.01)
+        thenAdaptWithValue(0.01, origin)
     }
 
     @Test
-    fun adaptCoordinateToGoogleMapsCoordinatesShouldSumAdaptedDegreeMinuteAndSecond(){
-        givenACoordinate(degree = degree, minute = 30, second = 36f)
+    fun adaptCoordinateToGoogleMapsCoordinatesShouldSumAdaptedDegreeMinuteAndSecond() {
+        givenALatitude(degree = degree, minute = 30, second = 36f)
+        givenALongitude()
+        givenACoordinate(latitude, longitude)
 
         whenAdaptToGoogleMapCoordinate()
 
-        thenAdaptWithValue(degree + 0.5 + 0.01)
+        thenAdaptWithValue(degree + 0.5 + 0.01, origin)
     }
 
     @Test
-    fun adaptCoordinateWithWestCardinalPointToGoogleMapsCoordinatesReturnNegativeCoordinates(){
-        givenACoordinate(degree = degree, minute = 30, second = 36f, cardinalPoint = CardinalPoint.WEST)
+    fun adaptCoordinateWithWestCardinalPointToGoogleMapsCoordinatesReturnNegativeCoordinates() {
+        givenALatitude()
+        givenALongitude(degree = degree, minute = 30, second = 36f, cardinalPoint = CardinalPoint.WEST)
+        givenACoordinate(latitude, longitude)
 
         whenAdaptToGoogleMapCoordinate()
 
-        thenAdaptWithValue(-(degree + 0.5 + 0.01))
+        thenAdaptWithValue(origin, -(degree + 0.5 + 0.01))
     }
 
     @Test
-    fun adaptCoordinateWithSouthCardinalPointToGoogleMapsCoordinatesReturnNegativeCoordinates(){
-        givenACoordinate(degree = degree, minute = 30, second = 36f, cardinalPoint = CardinalPoint.SOUTH)
+    fun adaptCoordinateWithSouthCardinalPointToGoogleMapsCoordinatesReturnNegativeCoordinates() {
+        givenALatitude(degree = degree, minute = 30, second = 36f, cardinalPoint = CardinalPoint.SOUTH)
+        givenALongitude()
+        givenACoordinate(latitude, longitude)
 
         whenAdaptToGoogleMapCoordinate()
 
-        thenAdaptWithValue(-(degree + 0.5 + 0.01))
+        thenAdaptWithValue(-(degree + 0.5 + 0.01), 0.0)
     }
 
-    private fun thenAdaptWithValue(expectedGoogleMapsCoordinate: Double) {
+    @Test
+    fun adaptCoordinatesWithLatitudeAndLongitudeReturnValidGoogleCoordinates(){
+        givenALatitude(degree = degree, minute = 30, second = 36f, cardinalPoint = CardinalPoint.SOUTH)
+        givenALongitude(degree = degree, minute = 30, second = 36f, cardinalPoint = CardinalPoint.WEST)
+        givenACoordinate(latitude, longitude)
+
+        whenAdaptToGoogleMapCoordinate()
+
+        thenAdaptWithValue(-(degree + 0.5 + 0.01), -(degree + 0.5 + 0.01))
+    }
+
+    private fun thenAdaptWithValue(expectedGoogleMapsLatitude: Double, expectedGoogleMapsLongitude: Double) {
         Assert.assertNotNull(googleMapsCoordinate)
-        Assert.assertEquals(expectedGoogleMapsCoordinate, googleMapsCoordinate)
+        Assert.assertEquals(expectedGoogleMapsLatitude, googleMapsCoordinate!!.latitude)
+        Assert.assertEquals(expectedGoogleMapsLongitude, googleMapsCoordinate!!.longitude)
     }
 
     private fun whenAdaptToGoogleMapCoordinate() {
         googleMapsCoordinate = coordinatesAdapterService.toGoogleMapsCoordinate(coordinate)
     }
 
-    private fun givenACoordinate( degree: Int = zero, minute: Int = zero, second: Float = zero.toFloat(), cardinalPoint: CardinalPoint = CardinalPoint.NORTH) {
-        coordinate = Coordinate(degree, minute, second, cardinalPoint)
+    private fun givenACoordinate(latitude: Latitude, longitude: Longitude) {
+        coordinate = Coordinate(latitude, longitude)
+    }
+
+    private fun givenALatitude(degree: Int = zero, minute: Int = zero, second: Float = zero.toFloat(),
+                               cardinalPoint: CardinalPoint = CardinalPoint.NORTH){
+        latitude = Latitude(degree, minute, second, cardinalPoint)
+    }
+
+    private fun givenALongitude(degree: Int = zero, minute: Int = zero, second: Float = zero.toFloat(),
+                                cardinalPoint: CardinalPoint = CardinalPoint.EAST){
+        longitude = Longitude(degree, minute, second, cardinalPoint)
     }
 }

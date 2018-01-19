@@ -2,8 +2,7 @@ package tesis.untref.com.firealerts.infrastructure.sqlite.entity
 
 import android.arch.persistence.room.ColumnInfo
 import tesis.untref.com.firealerts.model.CardinalPoint
-import tesis.untref.com.firealerts.model.Coordinate
-
+import tesis.untref.com.firealerts.model.Latitude
 
 class LatitudeEntity(
 
@@ -19,9 +18,9 @@ class LatitudeEntity(
         @ColumnInfo(name = "lat_cardinal_point")
         var cardinalPoint: String? = null
 ) {
-    constructor(coordinate: Coordinate) : this(coordinate.degree, coordinate.minute, coordinate.second, coordinate.cardinalPoint.name)
+    constructor(latitude: Latitude) : this(latitude.degree, latitude.minute, latitude.second, latitude.cardinalPoint.name)
 
     constructor(): this(null, null, null,null)
 
-    fun toCoordinate(): Coordinate = Coordinate(degree!!, minute!!, second!!, CardinalPoint.valueOf(cardinalPoint!!))
+    fun toLatitude(): Latitude = Latitude(degree!!, minute!!, second!!, CardinalPoint.valueOf(cardinalPoint!!))
 }
