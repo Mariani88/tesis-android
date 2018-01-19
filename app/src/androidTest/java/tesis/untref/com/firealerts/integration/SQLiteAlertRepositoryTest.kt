@@ -31,6 +31,7 @@ class SQLiteAlertRepositoryTest {
     private val east = CardinalPoint.EAST.name
     private val north = CardinalPoint.NORTH.name
     private val alertId = 3L
+    private lateinit var alertEntity: AlertEntity
 
     @Before
     fun setUp() {
@@ -47,11 +48,23 @@ class SQLiteAlertRepositoryTest {
 
     @Test
     fun insertAlertShouldStoreIt(){
-        val latitude = LatitudeEntity(degree, minute, second, east)
-        val longitude = LongitudeEntity(degree, minute, second, north)
-        val alertEntity = AlertEntity(alertId, CoordinateEntity( latitude, longitude), Date())
-        inMemoryAlertDao.insertAll(alertEntity)
+        givenAnAlertEntity()
+        whenStoreAlertEntity()
+        thenFindIt()
+    }
+
+    private fun thenFindIt() {
         val storedAlertEntity = inMemoryAlertDao.findById(alertId)
         Assert.assertEquals(alertId, storedAlertEntity.toAlert().id)
+    }
+
+    private fun whenStoreAlertEntity() {
+        inMemoryAlertDao.insertAll(alertEntity)
+    }
+
+    private fun givenAnAlertEntity() {
+        val latitude = LatitudeEntity(degree, minute, second, east)
+        val longitude = LongitudeEntity(degree, minute, second, north)
+        alertEntity = AlertEntity(alertId, CoordinateEntity(latitude, longitude), Date())
     }
 }
