@@ -6,11 +6,17 @@ import tesis.untref.com.firealerts.model.Coordinate
 
 
 class LatitudeEntity(
+
+        @ColumnInfo(name = "lat_degree")
         var degree: Int? = null,
+
+        @ColumnInfo(name = "lat_minute")
         var minute: Int? = null,
+
+        @ColumnInfo(name = "lat_second")
         var second: Float? = null,
 
-        @ColumnInfo(name = "cardinal_point")
+        @ColumnInfo(name = "lat_cardinal_point")
         var cardinalPoint: String? = null
 ) {
     constructor(coordinate: Coordinate) : this(coordinate.degree, coordinate.minute, coordinate.second, coordinate.cardinalPoint.name)

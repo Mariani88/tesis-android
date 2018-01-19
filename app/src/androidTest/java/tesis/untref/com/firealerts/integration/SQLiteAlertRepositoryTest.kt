@@ -49,7 +49,7 @@ class SQLiteAlertRepositoryTest {
     fun insertAlertShouldStoreIt(){
         val latitude = LatitudeEntity(degree, minute, second, east)
         val longitude = LongitudeEntity(degree, minute, second, north)
-        val alertEntity = AlertEntity(alertId, CoordinateEntity( latitude, longitude), Date().time)
+        val alertEntity = AlertEntity(alertId, CoordinateEntity( latitude, longitude), Date())
         inMemoryAlertDao.insertAll(alertEntity)
         val storedAlertEntity = inMemoryAlertDao.findById(alertId)
         Assert.assertEquals(alertId, storedAlertEntity.toAlert().id)

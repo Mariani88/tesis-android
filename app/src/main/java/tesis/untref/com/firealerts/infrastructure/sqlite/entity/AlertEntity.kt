@@ -17,13 +17,13 @@ class AlertEntity (
         var coordinate: CoordinateEntity?,
 
         @ColumnInfo(name = "date")
-        var date: Long? = null
+        var date: Date? = null
 ) {
 
-    constructor(alert: Alert): this(alert.id, CoordinateEntity(LatitudeEntity(alert.latitude), LongitudeEntity(alert.longitude)), alert.date.time)
+    constructor(alert: Alert): this(alert.id, CoordinateEntity(LatitudeEntity(alert.latitude), LongitudeEntity(alert.longitude)), alert.date)
 
     constructor(): this(null, null, null)
 
-    fun toAlert(): Alert = Alert(id!!, coordinate!!.latitude!!.toCoordinate(),  coordinate!!.longitude!!.toCoordinate(), Date(date!!))
+    fun toAlert(): Alert = Alert(id!!, coordinate!!.latitude!!.toCoordinate(),  coordinate!!.longitude!!.toCoordinate(), date!!)
 
 }
