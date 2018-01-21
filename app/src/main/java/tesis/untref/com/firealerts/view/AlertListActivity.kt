@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ListView
 import tesis.untref.com.firealerts.R
 import tesis.untref.com.firealerts.presenter.AlertListPresenter
@@ -19,6 +20,8 @@ class AlertListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         setContentView(R.layout.activity_alert_list)
         alertListPresenter = AlertListPresenter(this)
         alertListPresenter.showAlerts()
+        val dataTestButton = findViewById<Button>(R.id.button2)
+        dataTestButton.setOnClickListener { alertListPresenter.storeDataTest() }
     }
 
     fun showAlerts(alerts: List<String>){

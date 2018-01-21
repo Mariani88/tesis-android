@@ -2,4 +2,5 @@
     <string name="app_name">FireAlerts</string>
     <string name="go_alerts">Go alerts</string>
     <string name="title_activity_maps">Map</string>
+    <string name="alerts">ALERTS</string>
 </resources>

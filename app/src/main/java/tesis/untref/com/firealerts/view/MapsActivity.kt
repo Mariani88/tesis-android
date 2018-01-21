@@ -37,7 +37,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val long = intent.getDoubleExtra("LONG", 0.0)
         val lat = intent.getDoubleExtra("LAT", 0.0)
         mMap = googleMap
-        // Add a marker in Sydney and move the camera
         val myHome = LatLng(lat, long)
         mMap.addMarker(MarkerOptions().position(myHome).title("Marker in My Home"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myHome, 14f))
