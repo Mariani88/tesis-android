@@ -4,13 +4,17 @@ import io.reactivex.Flowable
 import tesis.untref.com.firealerts.infrastructure.sqlite.dao.AlertDao
 import tesis.untref.com.firealerts.infrastructure.sqlite.entity.AlertEntity
 import tesis.untref.com.firealerts.model.Alert
+import tesis.untref.com.firealerts.model.AlertRepository
 
-class SQLiteAlertRepository (private val alertDao: AlertDao /*context: Context*/){
+class SQLiteAlertRepository (private val alertDao: AlertDao): AlertRepository{
 
-    //private val alertDao = Room.databaseBuilder(context, AlertDataBase::class.java, "database-name").build().alertDao()
+    override fun findAll(): Flowable<List<Alert>> =
+        alertDao.findAll().map { it.map { it.toAlert() } }
 
-    fun findById(alertId: Long): Flowable<Alert> =
+    override fun findById(alertId: Long): Flowable<Alert> =
         alertDao.findById(alertId).map { it.toAlert() }
 
-    fun addAll(alerts: List<Alert>) = alertDao.insertAll(* alerts.map { AlertEntity(it) }.toTypedArray())
+    override fun addAll(alerts: List<Alert>) = alertDao.insertAll(*alerts
+            .map { AlertEntity(it) }
+            .toTypedArray())
 }

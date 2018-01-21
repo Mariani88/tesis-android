@@ -14,17 +14,15 @@ import tesis.untref.com.firealerts.infrastructure.sqlite.entity.AlertEntity
 import tesis.untref.com.firealerts.infrastructure.sqlite.entity.CoordinateEntity
 import tesis.untref.com.firealerts.infrastructure.sqlite.entity.LatitudeEntity
 import tesis.untref.com.firealerts.infrastructure.sqlite.entity.LongitudeEntity
-import tesis.untref.com.firealerts.infrastructure.sqlite.repository.SQLiteAlertRepository
 import tesis.untref.com.firealerts.model.CardinalPoint
 import java.io.IOException
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-class SQLiteAlertRepositoryTest {
+class AlertDaoTest {
 
     private var inMemoryDatabase: AlertDataBase? = null
     private lateinit var inMemoryAlertDao: AlertDao
-    private lateinit var sqLiteAlertRepository: SQLiteAlertRepository
     private val degree = 30
     private val minute = 40
     private val second = 23f
@@ -32,6 +30,8 @@ class SQLiteAlertRepositoryTest {
     private val north = CardinalPoint.NORTH.name
     private val alertId = 3L
     private lateinit var alertEntity: AlertEntity
+    private lateinit var alertEntity2: AlertEntity
+    private val alertId2 = 50L
 
     @Before
     fun setUp() {
@@ -47,23 +47,55 @@ class SQLiteAlertRepositoryTest {
     }
 
     @Test
-    fun insertAlertShouldStoreIt(){
+    fun insertAlertShouldStoreIt() {
         givenAnAlertEntity()
         whenStoreAlertEntity()
         thenFindIt()
     }
 
+    @Test
+    fun findAllShouldReturnAllAlerts() {
+        givenTwoAlertEntities()
+
+        whenInsertAll()
+
+        thenFindAll()
+    }
+
+    private fun thenFindAll() {
+        inMemoryAlertDao.findAll().subscribe { assertContentList(it) }
+    }
+
+    private fun assertContentList(alertEntities: List<AlertEntity>) {
+        Assert.assertEquals(2, alertEntities.size)
+        Assert.assertTrue(alertEntities.any { it.id == alertEntity.id })
+        Assert.assertTrue(alertEntities.any { it.id == alertEntity2.id })
+    }
+
+    private fun whenInsertAll() {
+        inMemoryAlertDao.insertAll(alertEntity, alertEntity2)
+    }
+
+    private fun givenTwoAlertEntities() {
+        alertEntity = createAlertEntity(alertId)
+        alertEntity2 = createAlertEntity(alertId2)
+    }
+
     private fun thenFindIt() {
-        inMemoryAlertDao.findById(alertId).subscribe({Assert.assertEquals(it.toAlert().id, alertId) })
+        inMemoryAlertDao.findById(alertId).subscribe({ Assert.assertEquals(it.toAlert().id, alertId) })
     }
 
     private fun whenStoreAlertEntity() {
         inMemoryAlertDao.insertAll(alertEntity)
     }
 
-    private fun givenAnAlertEntity() {
+    private fun givenAnAlertEntity(alertId: Long = this.alertId) {
+        alertEntity = createAlertEntity(alertId)
+    }
+
+    private fun createAlertEntity(alertId: Long = this.alertId): AlertEntity {
         val latitude = LatitudeEntity(degree, minute, second, east)
         val longitude = LongitudeEntity(degree, minute, second, north)
-        alertEntity = AlertEntity(alertId, CoordinateEntity(latitude, longitude), Date())
+        return AlertEntity(alertId, CoordinateEntity(latitude, longitude), Date())
     }
 }

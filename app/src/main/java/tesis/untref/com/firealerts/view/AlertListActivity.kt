@@ -28,10 +28,14 @@ class AlertListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         alertsList.onItemClickListener = this
     }
 
-    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        alertListPresenter.showAlert(id)
+    }
+
+    fun goGoogleMapsView(latitude: Double, longitude: Double){
         val intent = Intent(this, MapsActivity::class.java)
-        intent.putExtra("LAT", -34.55439)
-        intent.putExtra("LONG", -58.60905809999997)
+        intent.putExtra("LAT", latitude)
+        intent.putExtra("LONG", longitude)
 
         startActivity(intent)
     }

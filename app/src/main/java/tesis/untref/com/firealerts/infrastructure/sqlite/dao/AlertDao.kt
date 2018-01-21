@@ -14,4 +14,7 @@ interface AlertDao {
 
     @Query("SELECT * FROM alerts WHERE id = :arg0")
     fun findById(alertId: Long): Flowable<AlertEntity>
+
+    @Query("SELECT * FROM alerts")
+    fun findAll(): Flowable<List<AlertEntity>>
 }
