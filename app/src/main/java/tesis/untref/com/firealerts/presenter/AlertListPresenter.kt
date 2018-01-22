@@ -1,6 +1,10 @@
 package tesis.untref.com.firealerts.presenter
 
 import android.arch.persistence.room.Room
+import io.reactivex.Completable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import tesis.untref.com.firealerts.infrastructure.sqlite.dao.AlertDao
 import tesis.untref.com.firealerts.infrastructure.sqlite.dao.AlertDataBase
 import tesis.untref.com.firealerts.infrastructure.sqlite.entity.AlertEntity
@@ -30,6 +34,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     fun showAlerts() {
         findAlertInteractor.findAlerts()
                 .map { toGoogleMapsCoordinates(it) }
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe{alertListActivity.showAlerts(it)}
     }
 
@@ -37,12 +42,6 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
         alerts
                 .map { coordinatesAdapterService.toGoogleMapsCoordinate(it.coordinate) }
                 .map { "Lat: ${it.latitude}\nLong:${it.longitude}" }
-
-    private fun alerts(): List<String> {
-        val lat = -34.55439
-        val long = -58.60905809999997
-        return listOf("Lat: $lat \nLong: $long ", "Lat: 34\nLong: 33")
-    }
 
     fun showAlert(alertId: Long) {
         findAlertInteractor
@@ -58,6 +57,10 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     fun storeDataTest() {
         val latitude = LatitudeEntity(34, 33,15.8f, CardinalPoint.SOUTH.name)
         val longitude = LongitudeEntity(58, 36, 32.61f, CardinalPoint.WEST.name)
-        alertDao.insertAll(AlertEntity(1L, CoordinateEntity(latitude, longitude), Date()))
+        Completable
+                .fromAction {  alertDao.insertAll(AlertEntity(1L, CoordinateEntity(latitude, longitude), Date()))}
+                .subscribeOn(Schedulers.newThread())
+                .subscribe {  }
+        showAlerts()
     }
 }
