@@ -1,6 +1,11 @@
 package tesis.untref.com.firealerts.presenter
 
 import android.arch.persistence.room.Room
+import android.support.annotation.MainThread
+import io.reactivex.Completable
+import io.reactivex.Scheduler
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import tesis.untref.com.firealerts.infrastructure.sqlite.dao.AlertDao
 import tesis.untref.com.firealerts.infrastructure.sqlite.dao.AlertDataBase
 import tesis.untref.com.firealerts.infrastructure.sqlite.entity.AlertEntity
@@ -27,11 +32,10 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
         coordinatesAdapterService = CoordinatesAdapterService()
     }
 
-    fun showAlerts() {
+    fun showAlerts() =
         findAlertInteractor.findAlerts()
                 .map { toGoogleMapsCoordinates(it) }
-                .subscribe{alertListActivity.showAlerts(it)}
-    }
+                .doOnNext{alertListActivity.showAlerts(it)}
 
     private fun toGoogleMapsCoordinates(alerts: List<Alert>): List<String> =
         alerts
@@ -47,7 +51,8 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     fun showAlert(alertId: Long) {
         findAlertInteractor
                 .find(alertId)
-                .subscribe({refreshView(it)})
+                .observeOn()
+                .subscribe {refreshView(it)}
     }
 
     private fun refreshView(alert: Alert) {
@@ -58,6 +63,11 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     fun storeDataTest() {
         val latitude = LatitudeEntity(34, 33,15.8f, CardinalPoint.SOUTH.name)
         val longitude = LongitudeEntity(58, 36, 32.61f, CardinalPoint.WEST.name)
-        alertDao.insertAll(AlertEntity(1L, CoordinateEntity(latitude, longitude), Date()))
+
+        Completable
+                .fromAction{alertDao.insertAll(AlertEntity(1L, CoordinateEntity(latitude, longitude), Date()))}
+                .subscribeOn(Schedulers.newThread())
+        showAlert(1L)
+        //alertDao.insertAll(AlertEntity(1L, CoordinateEntity(latitude, longitude), Date()))
     }
 }
