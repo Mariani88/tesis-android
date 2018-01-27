@@ -1,9 +1,8 @@
 package tesis.untref.com.firealerts.presenter
 
 import android.arch.persistence.room.Room
-import android.support.annotation.MainThread
 import io.reactivex.Completable
-import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import tesis.untref.com.firealerts.infrastructure.sqlite.dao.AlertDao
@@ -20,6 +19,7 @@ import tesis.untref.com.firealerts.model.interactor.FindAlertInteractor
 import tesis.untref.com.firealerts.view.AlertListActivity
 import java.util.*
 
+
 class AlertListPresenter(private val alertListActivity: AlertListActivity) {
 
     private val findAlertInteractor: FindAlertInteractor
@@ -32,27 +32,21 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
         coordinatesAdapterService = CoordinatesAdapterService()
     }
 
-    fun showAlerts() =
+    fun showAlerts(): Disposable =
         findAlertInteractor.findAlerts()
                 .map { toGoogleMapsCoordinates(it) }
-                .doOnNext{alertListActivity.showAlerts(it)}
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe{alertListActivity.showAlerts(it)}
 
     private fun toGoogleMapsCoordinates(alerts: List<Alert>): List<String> =
         alerts
                 .map { coordinatesAdapterService.toGoogleMapsCoordinate(it.coordinate) }
                 .map { "Lat: ${it.latitude}\nLong:${it.longitude}" }
 
-    private fun alerts(): List<String> {
-        val lat = -34.55439
-        val long = -58.60905809999997
-        return listOf("Lat: $lat \nLong: $long ", "Lat: 34\nLong: 33")
-    }
-
     fun showAlert(alertId: Long) {
         findAlertInteractor
                 .find(alertId)
-                .observeOn()
-                .subscribe {refreshView(it)}
+                .subscribe({refreshView(it)})
     }
 
     private fun refreshView(alert: Alert) {
@@ -67,7 +61,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
         Completable
                 .fromAction{alertDao.insertAll(AlertEntity(1L, CoordinateEntity(latitude, longitude), Date()))}
                 .subscribeOn(Schedulers.newThread())
-        showAlert(1L)
-        //alertDao.insertAll(AlertEntity(1L, CoordinateEntity(latitude, longitude), Date()))
+                .subscribe()
+        showAlerts()
     }
 }

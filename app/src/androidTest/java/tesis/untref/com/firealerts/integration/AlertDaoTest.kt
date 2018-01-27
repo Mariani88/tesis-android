@@ -62,6 +62,28 @@ class AlertDaoTest {
         thenFindAll()
     }
 
+    @Test
+    fun removeAllCleanTable(){
+        givenStoreAlertEntities()
+
+        whenDeleteAll()
+
+        thenTableIsEmpty()
+    }
+
+    private fun thenTableIsEmpty() {
+        inMemoryAlertDao.findAll().subscribe { it.isEmpty() }
+    }
+
+    private fun whenDeleteAll() {
+        inMemoryAlertDao.removeAll()
+    }
+
+    private fun givenStoreAlertEntities() {
+        givenTwoAlertEntities()
+        inMemoryAlertDao.insertAll(alertEntity, alertEntity2)
+    }
+
     private fun thenFindAll() {
         inMemoryAlertDao.findAll().subscribe { assertContentList(it) }
     }

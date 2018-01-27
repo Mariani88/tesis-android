@@ -3,6 +3,7 @@ package tesis.untref.com.firealerts.infrastructure.sqlite.dao
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import tesis.untref.com.firealerts.infrastructure.sqlite.entity.AlertEntity
 
@@ -17,4 +18,7 @@ interface AlertDao {
 
     @Query("SELECT * FROM alerts")
     fun findAll(): Flowable<List<AlertEntity>>
+
+    @Query("DELETE FROM alerts")
+    fun removeAll()
 }
