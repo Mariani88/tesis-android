@@ -64,4 +64,12 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
                 .subscribe()
         showAlerts()
     }
+
+    fun removeAll() {
+        Completable
+                .fromAction{alertDao.removeAll()}
+                .subscribeOn(Schedulers.newThread())
+                .subscribe {  }
+        showAlerts()
+    }
 }

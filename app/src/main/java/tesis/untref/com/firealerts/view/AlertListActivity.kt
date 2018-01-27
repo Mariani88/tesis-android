@@ -22,6 +22,8 @@ class AlertListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         alertListPresenter.showAlerts()
         val dataTestButton = findViewById<Button>(R.id.button2)
         dataTestButton.setOnClickListener { alertListPresenter.storeDataTest() }
+        val deleteButton = findViewById<Button>(R.id.delete_all_button)
+        deleteButton.setOnClickListener{alertListPresenter.removeAll()}
     }
 
     fun showAlerts(alerts: List<String>){
