@@ -5,6 +5,7 @@ import junit.framework.Assert
 import org.junit.Before
 import org.junit.Test
 import tesis.untref.com.firealerts.model.*
+import tesis.untref.com.firealerts.model.service.CoordinatesAdapterService
 
 class CoordinatesAdapterServiceTest {
 

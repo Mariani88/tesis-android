@@ -14,7 +14,7 @@ import tesis.untref.com.firealerts.infrastructure.sqlite.entity.LongitudeEntity
 import tesis.untref.com.firealerts.infrastructure.sqlite.repository.SQLiteAlertRepository
 import tesis.untref.com.firealerts.model.Alert
 import tesis.untref.com.firealerts.model.CardinalPoint
-import tesis.untref.com.firealerts.model.CoordinatesAdapterService
+import tesis.untref.com.firealerts.model.service.CoordinatesAdapterService
 import tesis.untref.com.firealerts.model.interactor.FindAlertInteractor
 import tesis.untref.com.firealerts.view.AlertListActivity
 import java.util.*

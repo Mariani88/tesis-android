@@ -1,6 +1,8 @@
-package tesis.untref.com.firealerts.model
+package tesis.untref.com.firealerts.model.service
 
 import com.google.android.gms.maps.model.LatLng
+import tesis.untref.com.firealerts.model.CardinalPoint
+import tesis.untref.com.firealerts.model.Coordinate
 
 class CoordinatesAdapterService {
 
