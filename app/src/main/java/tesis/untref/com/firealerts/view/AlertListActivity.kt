@@ -34,7 +34,7 @@ class AlertListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        alertListPresenter.showAlert(id)
+        alertListPresenter.showAlert(id + 1)
     }
 
     fun goGoogleMapsView(latitude: Double, longitude: Double){

@@ -46,6 +46,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     fun showAlert(alertId: Long) {
         findAlertInteractor
                 .find(alertId)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({refreshView(it)})
     }
 
