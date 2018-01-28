@@ -8,5 +8,5 @@ class FindAlertInteractor(private val alertRepository: AlertRepository) {
 
     fun find(alertId: Long): Flowable<Alert> = alertRepository.findById(alertId)
 
-    fun findAlerts(): Flowable<List<Alert>> = alertRepository.findAll()
+    fun findAlerts(): Flowable<List<Alert>> = alertRepository.findAllSortedByDate()
 }

@@ -24,6 +24,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     private val findAlertInteractor: FindAlertInteractor
     private val coordinatesAdapterService: CoordinatesAdapterService
     private val alertDao: AlertDao
+    private var id = 1L
 
     init {
         alertDao = Room.databaseBuilder(alertListActivity, AlertDataBase::class.java, "database-name").build().alertDao()
@@ -58,10 +59,11 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
         val longitude = LongitudeEntity(58, 36, 32.61f, CardinalPoint.WEST.name)
 
         Completable
-                .fromAction{alertDao.insertAll(AlertEntity(1L, CoordinateEntity(latitude, longitude), Date()))}
+                .fromAction{alertDao.insertAll(AlertEntity(id, CoordinateEntity(latitude, longitude), Date()))}
                 .subscribeOn(Schedulers.newThread())
                 .subscribe()
         showAlerts()
+        id++
     }
 
     fun removeAll() {

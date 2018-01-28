@@ -14,7 +14,9 @@ class SQLiteAlertRepository (private val alertDao: AlertDao): AlertRepository{
     override fun findById(alertId: Long): Flowable<Alert> =
         alertDao.findById(alertId).map { it.toAlert() }
 
-    override fun addAll(alerts: List<Alert>) = alertDao.insertAll(*alerts
-            .map { AlertEntity(it) }
-            .toTypedArray())
+    override fun addAll(alerts: List<Alert>) =
+            alertDao.insertAll(*alerts.map { AlertEntity(it) }.toTypedArray())
+
+    override fun findAllSortedByDate(): Flowable<List<Alert>> =
+            alertDao.findAllSortedByDate().map { it.map { it.toAlert() } }
 }

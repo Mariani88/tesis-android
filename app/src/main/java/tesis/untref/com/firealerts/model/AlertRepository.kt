@@ -9,4 +9,5 @@ interface AlertRepository {
     fun addAll(alerts: List<Alert>)
 
     fun findAll(): Flowable<List<Alert>>
+    fun findAllSortedByDate(): Flowable<List<Alert>>
 }
