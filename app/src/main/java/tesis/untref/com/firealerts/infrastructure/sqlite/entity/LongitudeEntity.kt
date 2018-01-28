@@ -4,7 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import tesis.untref.com.firealerts.model.CardinalPoint
 import tesis.untref.com.firealerts.model.Longitude
 
-class LongitudeEntity(
+data class LongitudeEntity(
 
         @ColumnInfo(name = " long_degree")
         var degree: Int? = null,

@@ -9,7 +9,7 @@ import tesis.untref.com.firealerts.model.Coordinate
 import java.util.*
 
 @Entity(tableName = "alerts")
-class AlertEntity (
+data class AlertEntity (
 
         @PrimaryKey(autoGenerate = true)
         var id: Long? = null,

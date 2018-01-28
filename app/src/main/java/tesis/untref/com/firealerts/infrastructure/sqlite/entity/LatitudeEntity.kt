@@ -4,7 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import tesis.untref.com.firealerts.model.CardinalPoint
 import tesis.untref.com.firealerts.model.Latitude
 
-class LatitudeEntity(
+data class LatitudeEntity(
 
         @ColumnInfo(name = "lat_degree")
         var degree: Int? = null,

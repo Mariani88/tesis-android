@@ -21,4 +21,7 @@ interface AlertDao {
 
     @Query("DELETE FROM alerts")
     fun removeAll()
+
+    @Query("SELECT * FROM alerts ORDER BY date DESC")
+    fun findAllSortedByDate(): Flowable<List<AlertEntity>>
 }

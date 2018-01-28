@@ -5,6 +5,7 @@ import org.junit.Before
 import org.junit.runner.RunWith
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
+
 import org.junit.After
 import org.junit.Assert
 import org.junit.Test
@@ -17,6 +18,7 @@ import tesis.untref.com.firealerts.infrastructure.sqlite.entity.LongitudeEntity
 import tesis.untref.com.firealerts.model.CardinalPoint
 import java.io.IOException
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class AlertDaoTest {
@@ -31,7 +33,10 @@ class AlertDaoTest {
     private val alertId = 3L
     private lateinit var alertEntity: AlertEntity
     private lateinit var alertEntity2: AlertEntity
+    private lateinit var alertEntity3: AlertEntity
     private val alertId2 = 50L
+    private val alertId3 = 54L
+    private var sortedStoredEntities: List<AlertEntity>? = null
 
     @Before
     fun setUp() {
@@ -71,8 +76,37 @@ class AlertDaoTest {
         thenTableIsEmpty()
     }
 
+    @Test
+    fun findAllSortedByDateShouldRetrieveAllSortedAlerts(){
+        givenStoreThreeAlertEntitiesOneByDay()
+
+        whenFindSortedByDate()
+
+        thenRetrieveSortedAlerts()
+    }
+
+    private fun thenRetrieveSortedAlerts() {
+        Assert.assertTrue(sortedStoredEntities!!.isNotEmpty())
+        Assert.assertEquals(3, sortedStoredEntities!!.size)
+        Assert.assertEquals(alertId3, sortedStoredEntities!![0].id)
+        Assert.assertEquals(alertId, sortedStoredEntities!![1].id)
+        Assert.assertEquals(alertId2, sortedStoredEntities!![2].id)
+    }
+
+    private fun whenFindSortedByDate() {
+        sortedStoredEntities = inMemoryAlertDao.findAllSortedByDate().blockingFirst()
+    }
+
+    private fun givenStoreThreeAlertEntitiesOneByDay() {
+        alertEntity = createAlertEntity(alertId, Date(Date().time + TimeUnit.DAYS.toMillis(1)))
+        alertEntity2 = createAlertEntity(alertId2, Date())
+        alertEntity3 = createAlertEntity(alertId3, Date(Date().time + TimeUnit.DAYS.toMillis(2)))
+        inMemoryAlertDao.insertAll(alertEntity, alertEntity2, alertEntity3)
+    }
+
     private fun thenTableIsEmpty() {
-        inMemoryAlertDao.findAll().subscribe { it.isEmpty() }
+        val alertEntities = inMemoryAlertDao.findAll().blockingFirst()
+        Assert.assertTrue(alertEntities.isEmpty())
     }
 
     private fun whenDeleteAll() {
@@ -85,7 +119,8 @@ class AlertDaoTest {
     }
 
     private fun thenFindAll() {
-        inMemoryAlertDao.findAll().subscribe { assertContentList(it) }
+        val alertEntities = inMemoryAlertDao.findAll().blockingFirst()
+        assertContentList(alertEntities)
     }
 
     private fun assertContentList(alertEntities: List<AlertEntity>) {
@@ -104,7 +139,10 @@ class AlertDaoTest {
     }
 
     private fun thenFindIt() {
-        inMemoryAlertDao.findById(alertId).subscribe({ Assert.assertEquals(it.toAlert().id, alertId) })
+        val storedAlertEntity = inMemoryAlertDao
+                .findById(alertId)
+                .blockingFirst()
+        Assert.assertEquals(alertEntity, storedAlertEntity)
     }
 
     private fun whenStoreAlertEntity() {
@@ -115,9 +153,9 @@ class AlertDaoTest {
         alertEntity = createAlertEntity(alertId)
     }
 
-    private fun createAlertEntity(alertId: Long = this.alertId): AlertEntity {
+    private fun createAlertEntity(alertId: Long = this.alertId, date: Date = Date()): AlertEntity {
         val latitude = LatitudeEntity(degree, minute, second, east)
         val longitude = LongitudeEntity(degree, minute, second, north)
-        return AlertEntity(alertId, CoordinateEntity(latitude, longitude), Date())
+        return AlertEntity(alertId, CoordinateEntity(latitude, longitude), date)
     }
 }

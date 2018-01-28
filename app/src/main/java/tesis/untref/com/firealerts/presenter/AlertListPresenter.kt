@@ -19,7 +19,6 @@ import tesis.untref.com.firealerts.model.interactor.FindAlertInteractor
 import tesis.untref.com.firealerts.view.AlertListActivity
 import java.util.*
 
-
 class AlertListPresenter(private val alertListActivity: AlertListActivity) {
 
     private val findAlertInteractor: FindAlertInteractor

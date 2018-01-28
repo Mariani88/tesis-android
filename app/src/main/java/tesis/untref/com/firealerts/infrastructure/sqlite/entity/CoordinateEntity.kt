@@ -2,7 +2,7 @@ package tesis.untref.com.firealerts.infrastructure.sqlite.entity
 
 import android.arch.persistence.room.Embedded
 
-class CoordinateEntity(
+data class CoordinateEntity(
 
         @Embedded
         var latitude: LatitudeEntity?,
