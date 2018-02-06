@@ -4,15 +4,26 @@ import android.content.Context
 import android.location.Address
 import com.google.android.gms.maps.model.LatLng
 import android.location.Geocoder
+import android.os.Bundle
+import io.reactivex.Maybe
+import io.reactivex.Single
+import tesis.untref.com.firealerts.extensions.emptyAddress
 
 import java.util.*
 
-class LocationService (private val context: Context){
+class LocationService (private val context: Context, private val geoCoder: Geocoder){
 
-    fun obtainAdress(latLng: LatLng): Address {
-        val geocoder = Geocoder(context, Locale.getDefault())
+    fun obtainAddress(latLng: LatLng): Address {
+        val geoCoder = Geocoder(context, Locale.getDefault())
 
-        val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        /*Maybe
+                .just(geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1))
+                .onErrorReturn { listOf(emptyAddress()) }
+                .map { it[0] }
+                .toSingle()
+        */
+
+        val addresses = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
         //val address = addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
         //val city = addresses[0].getLocality()
