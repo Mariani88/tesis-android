@@ -2,45 +2,35 @@ package tesis.untref.com.firealerts.message.infrastructure
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import android.content.ContentValues.TAG
+import android.support.v4.app.NotificationCompat
 import android.util.Log
 import com.google.firebase.messaging.RemoteMessage
+import tesis.untref.com.firealerts.R
+import android.app.NotificationManager
+import android.content.Context
 
 class DefaultFirebaseMessagingService: FirebaseMessagingService() {
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-        // ...
+    private val notificationId = 0
 
-        // TODO(developer): Handle FCM messages here.
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
+    override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         Log.d(TAG, "From: " + remoteMessage!!.from!!)
 
-        // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: " + remoteMessage.data)
-
-            if (/* Check if data needs to be processed by long running job */ true) {
-                // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-                scheduleJob()
-            } else {
-                // Handle message within 10 seconds
-                handleNow()
-            }
+            val alert = FirebaseRemoteAlertDeserializer().deserialize(remoteMessage.data)
+            //storeAlert()
+            sendNotification()
         }
-
-        // Check if message contains a notification payload.
-        if (remoteMessage.notification != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.notification!!.body!!)
-        }
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    private fun handleNow() {
-        //not implemented yet
-    }
-
-    private fun scheduleJob() {
-        //not implemented yet
+    private fun sendNotification() {
+        val notificationBuilder = NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.notification_icon_background)
+                .setContentTitle("My notification")
+                .setContentText("Hello World!")
+        notificationId.inc()
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }

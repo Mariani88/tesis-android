@@ -56,8 +56,8 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     }
 
     fun storeDataTest() {
-        val latitude = LatitudeEntity(34, 33,15.8f, CardinalPoint.SOUTH.name)
-        val longitude = LongitudeEntity(58, 36, 32.61f, CardinalPoint.WEST.name)
+        val latitude = LatitudeEntity(34, 33,15.8, CardinalPoint.SOUTH.name)
+        val longitude = LongitudeEntity(58, 36, 32.61, CardinalPoint.WEST.name)
 
         Completable
                 .fromAction{alertDao.insertAll(AlertEntity(id, CoordinateEntity(latitude, longitude), Date()))}

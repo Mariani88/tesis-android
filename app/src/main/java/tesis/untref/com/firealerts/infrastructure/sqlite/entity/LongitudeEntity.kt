@@ -13,7 +13,7 @@ data class LongitudeEntity(
         var minute: Int? = null,
 
         @ColumnInfo(name= "long_second")
-        var second: Float? = null,
+        var second: Double? = null,
 
         @ColumnInfo(name = "long_cardinal_point")
         var cardinalPoint: String? = null

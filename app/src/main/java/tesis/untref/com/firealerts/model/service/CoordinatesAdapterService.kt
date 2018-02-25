@@ -14,7 +14,7 @@ class CoordinatesAdapterService {
         return LatLng(transformedLatitude, transformedLongitude)
     }
 
-    private fun angularTransform(degree: Int, minute: Int, second: Float, cardinalPoint: CardinalPoint): Double{
+    private fun angularTransform(degree: Int, minute: Int, second: Double, cardinalPoint: CardinalPoint): Double{
         val transformedDegree = transform(degree, 1.toDouble())
         val transformedMinute = transform(minute, 60.toDouble())
         val transformedSecond = transform(second, 3600.toDouble())
