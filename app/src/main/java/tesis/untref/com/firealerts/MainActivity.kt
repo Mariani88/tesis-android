@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import com.google.firebase.messaging.FirebaseMessaging
-import tesis.untref.com.firealerts.presenter.MainPresenter
-import tesis.untref.com.firealerts.view.AlertListActivity
+import tesis.untref.com.firealerts.alert.presenter.MainPresenter
+import tesis.untref.com.firealerts.alert.view.AlertListActivity
 
 //https://antonioleiva.com/mvp-android/
 

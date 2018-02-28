@@ -1,7 +1,7 @@
 package tesis.untref.com.firealerts.message.infrastructure
 
 import org.json.JSONObject
-import tesis.untref.com.firealerts.model.*
+import tesis.untref.com.firealerts.alert.model.*
 import java.util.*
 
 class FirebaseRemoteAlertDeserializer {

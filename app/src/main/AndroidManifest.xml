@@ -38,7 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.AlertListActivity" />
+        <activity android:name="tesis.untref.com.firealerts.alert.view.AlertListActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -52,7 +52,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".view.MapsActivity"
+            android:name="tesis.untref.com.firealerts.alert.view.MapsActivity"
             android:label="@string/title_activity_maps" />
     </application>
 

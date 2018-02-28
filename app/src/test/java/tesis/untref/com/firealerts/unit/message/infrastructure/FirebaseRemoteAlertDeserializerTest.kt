@@ -4,9 +4,9 @@ import junit.framework.Assert
 import org.junit.Before
 import org.junit.Test
 import tesis.untref.com.firealerts.message.infrastructure.FirebaseRemoteAlertDeserializer
-import tesis.untref.com.firealerts.model.Alert
-import tesis.untref.com.firealerts.model.Latitude
-import tesis.untref.com.firealerts.model.Longitude
+import tesis.untref.com.firealerts.alert.model.Alert
+import tesis.untref.com.firealerts.alert.model.Latitude
+import tesis.untref.com.firealerts.alert.model.Longitude
 import tesis.untref.com.firealerts.unit.builder.AlertBuilder.Companion.createCoordinate
 import java.util.*
 

@@ -4,8 +4,8 @@ import com.google.android.gms.maps.model.LatLng
 import junit.framework.Assert
 import org.junit.Before
 import org.junit.Test
-import tesis.untref.com.firealerts.model.*
-import tesis.untref.com.firealerts.model.service.CoordinatesAdapterService
+import tesis.untref.com.firealerts.alert.model.*
+import tesis.untref.com.firealerts.alert.model.service.CoordinatesAdapterService
 
 class CoordinatesAdapterServiceTest {
 

@@ -4,7 +4,7 @@ import android.location.Geocoder
 import android.support.test.InstrumentationRegistry
 import com.google.android.gms.maps.model.LatLng
 import org.junit.Test
-import tesis.untref.com.firealerts.model.service.LocationService
+import tesis.untref.com.firealerts.alert.model.service.LocationService
 import java.util.*
 
 

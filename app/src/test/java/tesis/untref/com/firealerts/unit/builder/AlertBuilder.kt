@@ -1,6 +1,6 @@
 package tesis.untref.com.firealerts.unit.builder
 
-import tesis.untref.com.firealerts.model.*
+import tesis.untref.com.firealerts.alert.model.*
 import java.util.*
 
 class AlertBuilder {
