@@ -27,7 +27,7 @@ class AlertDaoTest {
     private lateinit var inMemoryAlertDao: AlertDao
     private val degree = 30
     private val minute = 40
-    private val second = 23f
+    private val second = 23.0
     private val east = CardinalPoint.EAST.name
     private val north = CardinalPoint.NORTH.name
     private val alertId = 3L

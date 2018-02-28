@@ -11,7 +11,7 @@ import java.util.*
 @Entity(tableName = "alerts")
 data class AlertEntity (
 
-        @PrimaryKey(autoGenerate = true)
+        @PrimaryKey
         var id: Long? = null,
 
         @Embedded

@@ -1,4 +1,4 @@
-package tesis.untref.com.firealerts.unit.model
+package tesis.untref.com.firealerts.unit.alert.model
 
 import com.google.android.gms.maps.model.LatLng
 import junit.framework.Assert
