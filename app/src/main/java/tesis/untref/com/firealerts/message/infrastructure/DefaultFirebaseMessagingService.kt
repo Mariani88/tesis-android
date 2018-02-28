@@ -1,17 +1,19 @@
 package tesis.untref.com.firealerts.message.infrastructure
 
-import com.google.firebase.messaging.FirebaseMessagingService
+import android.app.NotificationManager
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.support.v4.app.NotificationCompat
 import android.util.Log
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import tesis.untref.com.firealerts.R
-import android.app.NotificationManager
-import android.content.Context
+import tesis.untref.com.firealerts.alert.infrastructure.sqlite.repository.AlertRepositoryProvider
 
 class DefaultFirebaseMessagingService: FirebaseMessagingService() {
 
     private val notificationId = 0
+    private val sqLiteAlertRepository = AlertRepositoryProvider.getInstance(this)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         Log.d(TAG, "From: " + remoteMessage!!.from!!)
@@ -19,7 +21,7 @@ class DefaultFirebaseMessagingService: FirebaseMessagingService() {
         if (remoteMessage.data.isNotEmpty()) {
             Log.d(TAG, "Message data payload: " + remoteMessage.data)
             val alert = FirebaseRemoteAlertDeserializer().deserialize(remoteMessage.data)
-            //storeAlert()
+            sqLiteAlertRepository.addAll(listOf(alert))
             sendNotification()
         }
     }

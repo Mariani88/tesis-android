@@ -1,5 +1,6 @@
 package tesis.untref.com.firealerts.alert.model
 
+import io.reactivex.Completable
 import io.reactivex.Flowable
 
 interface AlertRepository {
@@ -10,4 +11,5 @@ interface AlertRepository {
 
     fun findAll(): Flowable<List<Alert>>
     fun findAllSortedByDate(): Flowable<List<Alert>>
+    fun removeAll(): Completable
 }
