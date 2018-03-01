@@ -4,7 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import tesis.untref.com.firealerts.alert.infrastructure.sqlite.notification.AlertLocalNotificationService
+import tesis.untref.com.firealerts.alert.infrastructure.notification.AlertLocalNotificationService
 import tesis.untref.com.firealerts.alert.infrastructure.sqlite.repository.AlertRepositoryProvider
 import java.util.*
 
