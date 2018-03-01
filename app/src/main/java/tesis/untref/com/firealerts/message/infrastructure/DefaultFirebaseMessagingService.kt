@@ -10,9 +10,12 @@ import com.google.firebase.messaging.RemoteMessage
 import tesis.untref.com.firealerts.R
 import tesis.untref.com.firealerts.alert.infrastructure.sqlite.repository.AlertRepositoryProvider
 
-class DefaultFirebaseMessagingService: FirebaseMessagingService() {
+class DefaultFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val notificationId = 0
+    companion object {
+        private var notificationId = 0
+    }
+
     private val sqLiteAlertRepository = AlertRepositoryProvider.getInstance(this)
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
@@ -22,8 +25,12 @@ class DefaultFirebaseMessagingService: FirebaseMessagingService() {
             Log.d(TAG, "Message data payload: " + remoteMessage.data)
             val alert = FirebaseRemoteAlertDeserializer().deserialize(remoteMessage.data)
             sqLiteAlertRepository.addAll(listOf(alert))
-            sendNotification()
+                    .subscribe({ sendNotification() }, { logErrorAlertProcessing(it) })
         }
+    }
+
+    private fun logErrorAlertProcessing(exception: Throwable) {
+        Log.d("error on alert", exception.message)
     }
 
     private fun sendNotification() {
@@ -31,8 +38,8 @@ class DefaultFirebaseMessagingService: FirebaseMessagingService() {
                 .setSmallIcon(R.drawable.notification_icon_background)
                 .setContentTitle("My notification")
                 .setContentText("Hello World!")
-        notificationId.inc()
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationId = notificationId.inc()
+        val notificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(notificationId, notificationBuilder.build())
     }
 }

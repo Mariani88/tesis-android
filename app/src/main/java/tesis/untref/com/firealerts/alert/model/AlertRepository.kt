@@ -7,7 +7,7 @@ interface AlertRepository {
 
     fun findById(alertId: Long): Flowable<Alert>
 
-    fun addAll(alerts: List<Alert>)
+    fun addAll(alerts: List<Alert>): Completable
 
     fun findAll(): Flowable<List<Alert>>
     fun findAllSortedByDate(): Flowable<List<Alert>>

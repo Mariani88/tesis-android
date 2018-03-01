@@ -1,6 +1,5 @@
 package tesis.untref.com.firealerts.alert.presenter
 
-import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -51,8 +50,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
         val latitude = Latitude(34, 33,15.8, CardinalPoint.SOUTH)
         val longitude = Longitude(58, 36, 32.61, CardinalPoint.WEST)
 
-        Completable
-                .fromAction{alertRepository.addAll(listOf(Alert(id, Coordinate(latitude, longitude), Date())))}
+        alertRepository.addAll(listOf(Alert(id, Coordinate(latitude, longitude), Date())))
                 .subscribeOn(Schedulers.newThread())
                 .subscribe()
         showAlerts()
