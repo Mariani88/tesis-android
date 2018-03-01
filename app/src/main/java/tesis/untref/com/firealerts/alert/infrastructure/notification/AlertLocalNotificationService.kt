@@ -1,4 +1,4 @@
-package tesis.untref.com.firealerts.alert.infrastructure.sqlite.notification
+package tesis.untref.com.firealerts.alert.infrastructure.notification
 
 import android.app.NotificationManager
 import android.content.Context
