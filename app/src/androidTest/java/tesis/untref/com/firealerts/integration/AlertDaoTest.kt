@@ -16,6 +16,7 @@ import tesis.untref.com.firealerts.alert.infrastructure.sqlite.entity.Coordinate
 import tesis.untref.com.firealerts.alert.infrastructure.sqlite.entity.LatitudeEntity
 import tesis.untref.com.firealerts.alert.infrastructure.sqlite.entity.LongitudeEntity
 import tesis.untref.com.firealerts.alert.model.CardinalPoint
+import tesis.untref.com.firealerts.integration.builder.AlertEntityBuilder.Companion.createAlertAddressEntity
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -156,6 +157,6 @@ class AlertDaoTest {
     private fun createAlertEntity(alertId: Long = this.alertId, date: Date = Date()): AlertEntity {
         val latitude = LatitudeEntity(degree, minute, second, east)
         val longitude = LongitudeEntity(degree, minute, second, north)
-        return AlertEntity(alertId, CoordinateEntity(latitude, longitude), date)
+        return AlertEntity(alertId, CoordinateEntity(latitude, longitude), date, createAlertAddressEntity())
     }
 }

@@ -12,7 +12,7 @@ interface AlertDao {
     @Insert
     fun insertAll(vararg alertEntities: AlertEntity)
 
-    @Query("SELECT * FROM alerts WHERE ID = :arg0")
+    @Query("SELECT * FROM alerts WHERE ID = :alertId")
     fun findById(alertId: Long): Flowable<AlertEntity>
 
     @Query("SELECT * FROM alerts")

@@ -32,5 +32,4 @@ class AlertBuilder {
                              longitude: Longitude = createLongitude()): Coordinate =
                 Coordinate(latitude, longitude)
     }
-
 }

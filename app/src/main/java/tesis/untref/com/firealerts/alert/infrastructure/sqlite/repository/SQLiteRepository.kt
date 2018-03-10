@@ -24,5 +24,4 @@ class SQLiteAlertRepository (private val alertDao: AlertDao): AlertRepository{
     override fun removeAll(): Completable =
         Completable
                 .fromAction{alertDao.removeAll()}
-
 }
