@@ -1,22 +1,17 @@
 package tesis.untref.com.firealerts.integration
 
-import android.support.test.runner.AndroidJUnit4
-import org.junit.Before
-import org.junit.runner.RunWith
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
-
+import android.support.test.runner.AndroidJUnit4
 import org.junit.After
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import tesis.untref.com.firealerts.alert.infrastructure.sqlite.dao.AlertDao
 import tesis.untref.com.firealerts.alert.infrastructure.sqlite.dao.AlertDataBase
 import tesis.untref.com.firealerts.alert.infrastructure.sqlite.entity.AlertEntity
-import tesis.untref.com.firealerts.alert.infrastructure.sqlite.entity.CoordinateEntity
-import tesis.untref.com.firealerts.alert.infrastructure.sqlite.entity.LatitudeEntity
-import tesis.untref.com.firealerts.alert.infrastructure.sqlite.entity.LongitudeEntity
-import tesis.untref.com.firealerts.alert.model.CardinalPoint
-import tesis.untref.com.firealerts.integration.builder.AlertEntityBuilder.Companion.createAlertAddressEntity
+import tesis.untref.com.firealerts.integration.builder.AlertEntityBuilder.Companion.createAlertEntity
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -26,11 +21,6 @@ class AlertDaoTest {
 
     private var inMemoryDatabase: AlertDataBase? = null
     private lateinit var inMemoryAlertDao: AlertDao
-    private val degree = 30
-    private val minute = 40
-    private val second = 23.0
-    private val east = CardinalPoint.EAST.name
-    private val north = CardinalPoint.NORTH.name
     private val alertId = 3L
     private lateinit var alertEntity: AlertEntity
     private lateinit var alertEntity2: AlertEntity
@@ -152,11 +142,5 @@ class AlertDaoTest {
 
     private fun givenAnAlertEntity(alertId: Long = this.alertId) {
         alertEntity = createAlertEntity(alertId)
-    }
-
-    private fun createAlertEntity(alertId: Long = this.alertId, date: Date = Date()): AlertEntity {
-        val latitude = LatitudeEntity(degree, minute, second, east)
-        val longitude = LongitudeEntity(degree, minute, second, north)
-        return AlertEntity(alertId, CoordinateEntity(latitude, longitude), date, createAlertAddressEntity())
     }
 }
