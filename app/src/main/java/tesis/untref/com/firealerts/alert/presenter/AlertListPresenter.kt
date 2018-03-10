@@ -7,6 +7,7 @@ import tesis.untref.com.firealerts.alert.infrastructure.sqlite.repository.AlertR
 import tesis.untref.com.firealerts.alert.model.*
 import tesis.untref.com.firealerts.alert.model.interactor.FindAlertInteractor
 import tesis.untref.com.firealerts.alert.model.service.CoordinatesAdapterService
+import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressDto
 import tesis.untref.com.firealerts.alert.view.AlertListActivity
 import java.util.*
 
@@ -24,21 +25,19 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     }
 
     fun showAlerts(): Disposable =
-        findAlertInteractor.findAlerts()
-                .map { toGoogleMapsCoordinates(it) }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe{alertListActivity.showAlerts(it)}
+            findAlertInteractor.findAlerts()
+                    .map { prepareAddressAlertToShow(it) }
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { alertListActivity.showAlerts(it) }
 
-    private fun toGoogleMapsCoordinates(alerts: List<Alert>): List<String> =
-        alerts
-                .map { coordinatesAdapterService.toGoogleMapsCoordinate(it.coordinate) }
-                .map { "Lat: ${it.latitude}\nLong:${it.longitude}" }
+    private fun prepareAddressAlertToShow(alerts: List<Alert>): List<AlertAddressDto> =
+            alerts.map { AlertAddressDto(it.id, it.getAddressString()) }
 
     fun showAlert(alertId: Long) {
         findAlertInteractor
                 .find(alertId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({refreshView(it)})
+                .subscribe({ refreshView(it) })
     }
 
     private fun refreshView(alert: Alert) {
@@ -47,7 +46,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     }
 
     fun storeDataTest() {
-        val latitude = Latitude(34, 33,15.8, CardinalPoint.SOUTH)
+        val latitude = Latitude(34, 33, 15.8, CardinalPoint.SOUTH)
         val longitude = Longitude(58, 36, 32.61, CardinalPoint.WEST)
 
         alertRepository.addAll(listOf(Alert(id, Coordinate(latitude, longitude), Date())))
@@ -60,7 +59,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     fun removeAll() {
         alertRepository.removeAll()
                 .subscribeOn(Schedulers.newThread())
-                .subscribe {  }
+                .subscribe { }
         showAlerts()
     }
 }

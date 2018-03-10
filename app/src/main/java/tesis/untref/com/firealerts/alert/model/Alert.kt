@@ -10,4 +10,8 @@ data class Alert (val id: Long, val coordinate: Coordinate, val date: Date, var 
     fun addAddress(alertAddress: AlertAddress) {
         this.alertAddress = alertAddress
     }
+
+    fun getAddressString(): String =
+        alertAddress.toString()
+
 }

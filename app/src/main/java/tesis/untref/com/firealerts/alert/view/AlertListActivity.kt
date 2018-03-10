@@ -10,10 +10,12 @@ import android.widget.Button
 import android.widget.ListView
 import tesis.untref.com.firealerts.R
 import tesis.untref.com.firealerts.alert.presenter.AlertListPresenter
+import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressDto
 
 class AlertListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     private lateinit var alertListPresenter: AlertListPresenter
+    private var alertIdsShowing = listOf<Long>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,15 +28,17 @@ class AlertListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         deleteButton.setOnClickListener{alertListPresenter.removeAll()}
     }
 
-    fun showAlerts(alerts: List<String>){
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alerts)
+    fun showAlerts(alerts: List<AlertAddressDto>){
+        val alertAddresses = alerts.map { it.alertAddress }
+        alertIdsShowing = alerts.map { it.alertId }
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alertAddresses)
         val alertsList = findViewById<ListView>(R.id.listView)
         alertsList.adapter = adapter
         alertsList.onItemClickListener = this
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        alertListPresenter.showAlert(id + 1)
+        alertListPresenter.showAlert(alertIdsShowing[position] )
     }
 
     fun goGoogleMapsView(latitude: Double, longitude: Double){
