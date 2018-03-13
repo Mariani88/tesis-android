@@ -11,8 +11,8 @@ class AlertLocalNotificationService(private val context: Context, private val ra
     fun sendNotification() {
         val notificationBuilder = NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_stat_alert_notification)
-                .setContentTitle("My notification")
-                .setContentText("Hello World!")
+                .setContentTitle("ALERTA DE INCENDIO")
+                .setContentText("Obtén la ubicación ingrensando a la app")
         val notificationId = generateId()
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(notificationId, notificationBuilder.build())
