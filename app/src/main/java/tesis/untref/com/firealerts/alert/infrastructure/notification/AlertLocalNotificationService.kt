@@ -10,7 +10,7 @@ class AlertLocalNotificationService(private val context: Context, private val ra
 
     fun sendNotification() {
         val notificationBuilder = NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.notification_icon_background)
+                .setSmallIcon(R.drawable.ic_stat_alert_notification)
                 .setContentTitle("My notification")
                 .setContentText("Hello World!")
         val notificationId = generateId()
