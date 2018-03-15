@@ -8,6 +8,12 @@ import tesis.untref.com.firealerts.MainActivity
 import tesis.untref.com.firealerts.R
 import java.util.*
 import android.app.PendingIntent
+import android.net.Uri
+import android.os.Vibrator
+import android.support.v4.app.NotificationCompat.VISIBILITY_PUBLIC
+import android.media.RingtoneManager
+import android.media.Ringtone
+
 
 
 
@@ -22,6 +28,10 @@ class AlertLocalNotificationService(private val context: Context, private val ra
         val notifyPendingIntent = PendingIntent.getActivity(
                 context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT
         )
+        
+
+
+
 
         val notificationBuilder = NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_stat_alert_notification)
@@ -29,10 +39,28 @@ class AlertLocalNotificationService(private val context: Context, private val ra
                 .setContentText("Obtén la ubicación ingrensando a la app")
                 .setContentIntent(notifyPendingIntent)
                 .setAutoCancel(true)
+                .setVibrate(longArrayOf(500, 1000, 500, 1000))
+                .setSound(getSoundUri())
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setVisibility(VISIBILITY_PUBLIC)
+
+
+
+
         val notificationId = generateId()
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(notificationId, notificationBuilder.build())
+
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        vibrator.vibrate(longArrayOf(500, 1000, 500, 1000), -1)
     }
+
+
+    private fun getSoundUri(): Uri{
+       return Uri.parse("android.resource://"+ getPackageName() +"/raw/"+  R.raw.alarm)
+    }
+
+    private fun getPackageName() = "tesis.untref.com.firealerts"
 
     private fun generateId(): Int = (random.nextDouble() * MULTIPLIER).toInt()
 
