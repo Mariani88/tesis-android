@@ -3,11 +3,8 @@ package tesis.untref.com.firealerts
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Button
-import com.google.firebase.messaging.FirebaseMessaging
 import tesis.untref.com.firealerts.alert.presenter.MainPresenter
 import tesis.untref.com.firealerts.alert.view.AlertListActivity
-import tesis.untref.com.firealerts.message.infrastructure.topic
 
 //https://antonioleiva.com/mvp-android/
 
@@ -17,11 +14,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseMessaging.getInstance().subscribeToTopic(topic)
-        mainPresenter = MainPresenter(this)
         setContentView(R.layout.activity_main)
-        val button = findViewById<Button>(R.id.button)
+        mainPresenter = MainPresenter(this)
+        mainPresenter.initAppConfig()
+    }
+
+    fun nextView(){
         val intent = Intent(  this,  AlertListActivity::class.java)
-        button.setOnClickListener { startActivity(intent) }
+        startActivity(intent)
     }
 }

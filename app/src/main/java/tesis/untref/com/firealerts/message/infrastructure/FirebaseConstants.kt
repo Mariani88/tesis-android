@@ -1,3 +1,3 @@
 package tesis.untref.com.firealerts.message.infrastructure
 
-val topic = "alert"
+const val topic = "alert"
