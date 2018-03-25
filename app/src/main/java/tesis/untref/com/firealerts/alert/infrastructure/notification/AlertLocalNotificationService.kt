@@ -31,7 +31,7 @@ class AlertLocalNotificationService(private val context: Context, private val ra
 
     private fun vibrate() {
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        vibrator.vibrate(longArrayOf(500, 1000, 500, 1000), -1)
+        vibrator.vibrate(longArrayOf(500, 1000, 500, 1000), NO_REPEAT)
     }
 
     private fun sendNotification(notificationBuilder: NotificationCompat.Builder) {
@@ -47,14 +47,16 @@ class AlertLocalNotificationService(private val context: Context, private val ra
     }
 
     private fun getSoundUri(): Uri {
-        return Uri.parse("android.resource://" + getPackageName() + "/raw/" + R.raw.alarm)
+        return Uri.parse( ANDROID_RESOURCE+ PACKAGE + ALARM_FOLDER + R.raw.alarm)
     }
-
-    private fun getPackageName() = "tesis.untref.com.firealerts"
 
     private fun generateId(): Int = (random.nextDouble() * MULTIPLIER).toInt()
 
     companion object {
         const val MULTIPLIER = 1000000
+        const val PACKAGE = "tesis.untref.com.firealerts"
+        const val ANDROID_RESOURCE = "android.resource://"
+        const val ALARM_FOLDER = "/raw/"
+        const val NO_REPEAT = -1
     }
 }
