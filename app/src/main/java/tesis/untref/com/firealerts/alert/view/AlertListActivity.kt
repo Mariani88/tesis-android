@@ -1,8 +1,7 @@
 package tesis.untref.com.firealerts.alert.view
 
+import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -13,7 +12,7 @@ import tesis.untref.com.firealerts.R
 import tesis.untref.com.firealerts.alert.presenter.AlertListPresenter
 import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressDto
 
-class AlertListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
+class AlertListActivity : Activity(), AdapterView.OnItemClickListener {
 
     private lateinit var alertListPresenter: AlertListPresenter
     private var alertIdsShowing = listOf<Long>()

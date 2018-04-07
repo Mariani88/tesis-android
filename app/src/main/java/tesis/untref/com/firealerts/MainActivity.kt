@@ -1,5 +1,6 @@
 package tesis.untref.com.firealerts
 
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -9,7 +10,7 @@ import tesis.untref.com.firealerts.alert.view.AlertListActivity
 
 //https://antonioleiva.com/mvp-android/
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     private lateinit var mainPresenter: MainPresenter
 
