@@ -1,5 +1,6 @@
 package tesis.untref.com.firealerts.alert.view
 
+import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 

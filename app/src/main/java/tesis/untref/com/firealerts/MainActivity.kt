@@ -1,6 +1,7 @@
 package tesis.untref.com.firealerts
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import tesis.untref.com.firealerts.alert.presenter.MainPresenter
@@ -22,5 +23,6 @@ class MainActivity : AppCompatActivity() {
     fun nextView(){
         val intent = Intent(  this,  AlertListActivity::class.java)
         startActivity(intent)
+        finish()
     }
 }

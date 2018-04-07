@@ -1,6 +1,7 @@
 package tesis.untref.com.firealerts.alert.view
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -20,6 +21,7 @@ class AlertListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alert_list)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         alertListPresenter = AlertListPresenter(this)
         alertListPresenter.showAlerts()
         val dataTestButton = findViewById<Button>(R.id.button2)
