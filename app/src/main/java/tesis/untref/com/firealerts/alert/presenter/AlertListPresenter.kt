@@ -9,13 +9,11 @@ import tesis.untref.com.firealerts.alert.model.interactor.FindAlertInteractor
 import tesis.untref.com.firealerts.alert.model.service.CoordinatesAdapterService
 import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressDto
 import tesis.untref.com.firealerts.alert.view.AlertListActivity
-import java.util.*
 
 class AlertListPresenter(private val alertListActivity: AlertListActivity) {
 
     private val findAlertInteractor: FindAlertInteractor
     private val coordinatesAdapterService: CoordinatesAdapterService
-    private var id = 1L
     private val alertRepository: AlertRepository
 
     init {
@@ -43,17 +41,6 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     private fun refreshView(alert: Alert) {
         val googleMapsCoordinate = coordinatesAdapterService.toGoogleMapsCoordinate(alert.coordinate)
         alertListActivity.goGoogleMapsView(googleMapsCoordinate.latitude, googleMapsCoordinate.longitude)
-    }
-
-    fun storeDataTest() {
-        val latitude = Latitude(34, 33, 15.8, CardinalPoint.SOUTH)
-        val longitude = Longitude(58, 36, 32.61, CardinalPoint.WEST)
-
-        alertRepository.addAll(listOf(Alert(id, Coordinate(latitude, longitude), Date())))
-                .subscribeOn(Schedulers.newThread())
-                .subscribe()
-        showAlerts()
-        id++
     }
 
     fun removeAll() {

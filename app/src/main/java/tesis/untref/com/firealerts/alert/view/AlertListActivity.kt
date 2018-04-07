@@ -17,16 +17,14 @@ class AlertListActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
     private lateinit var alertListPresenter: AlertListPresenter
     private var alertIdsShowing = listOf<Long>()
+    private lateinit var deleteButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alert_list)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         alertListPresenter = AlertListPresenter(this)
         alertListPresenter.showAlerts()
-        val dataTestButton = findViewById<Button>(R.id.button2)
-        dataTestButton.setOnClickListener { alertListPresenter.storeDataTest() }
-        val deleteButton = findViewById<Button>(R.id.delete_all_button)
+        deleteButton = findViewById(R.id.delete_all_button)
         deleteButton.setOnClickListener{alertListPresenter.removeAll()}
     }
 

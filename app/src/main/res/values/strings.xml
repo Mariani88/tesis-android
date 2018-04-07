@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">FireAlerts</string>
+    <string name="app_name">Fire alerts</string>
     <string name="go_alerts">Go alerts</string>
     <string name="title_activity_maps">Map</string>
-    <string name="alerts">ALERTS</string>
+    <string name="alerts"><b>ALERTS</b></string>
 </resources>
