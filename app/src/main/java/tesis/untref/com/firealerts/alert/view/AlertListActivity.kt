@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.ListView
 import tesis.untref.com.firealerts.R
 import tesis.untref.com.firealerts.alert.presenter.AlertListPresenter
-import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressDto
+import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressReducedDataModel
 
 class AlertListActivity : Activity(), AdapterView.OnItemClickListener {
 
@@ -27,7 +27,7 @@ class AlertListActivity : Activity(), AdapterView.OnItemClickListener {
         deleteButton.setOnClickListener{alertListPresenter.removeAll()}
     }
 
-    fun showAlerts(alerts: List<AlertAddressDto>){
+    fun showAlerts(alerts: List<AlertAddressReducedDataModel>){
         val alertAddresses = alerts.map { it.alertAddress }
         alertIdsShowing = alerts.map { it.alertId }
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alertAddresses)

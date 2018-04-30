@@ -7,7 +7,7 @@ import tesis.untref.com.firealerts.alert.infrastructure.sqlite.repository.AlertR
 import tesis.untref.com.firealerts.alert.model.*
 import tesis.untref.com.firealerts.alert.model.interactor.FindAlertInteractor
 import tesis.untref.com.firealerts.alert.model.service.CoordinatesAdapterService
-import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressDto
+import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressReducedDataModel
 import tesis.untref.com.firealerts.alert.view.AlertListActivity
 
 class AlertListPresenter(private val alertListActivity: AlertListActivity) {
@@ -28,8 +28,8 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { alertListActivity.showAlerts(it) }
 
-    private fun prepareAddressAlertToShow(alerts: List<Alert>): List<AlertAddressDto> =
-            alerts.map { AlertAddressDto(it.id, it.getAddressString()) }
+    private fun prepareAddressAlertToShow(alerts: List<Alert>): List<AlertAddressReducedDataModel> =
+            alerts.map { AlertAddressReducedDataModel(it.id, it.getAddressString()) }
 
     fun showAlert(alertId: Long) {
         findAlertInteractor

@@ -19,6 +19,6 @@ class FirebaseTokenService : FirebaseInstanceIdService() {
     }
 
     private fun sendRegistrationToServer(refreshedToken: String) {
-        //not implemented yet
+        //not required yet
     }
 }

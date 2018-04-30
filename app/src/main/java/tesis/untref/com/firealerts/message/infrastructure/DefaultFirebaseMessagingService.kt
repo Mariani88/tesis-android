@@ -1,6 +1,5 @@
 package tesis.untref.com.firealerts.message.infrastructure
 
-import android.content.ContentValues.TAG
 import android.location.Geocoder
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -31,6 +30,10 @@ class DefaultFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun logErrorAlertProcessing(exception: Throwable) {
-        Log.d("error on alert", exception.message)
+        Log.d(TAG, exception.message)
+    }
+
+    companion object {
+        private const val TAG = "FCM_MESSAGE_RECEPTION"
     }
 }
