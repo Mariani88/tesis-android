@@ -3,4 +3,5 @@
     <string name="title_activity_maps">LOCALIZACION</string>
     <string name="alerts"><b>ALERTAS</b></string>
     <string name="delete_all">BORRAR TODO</string>
+    <string name="empty">NO HAY ALERTAS</string>
 </resources>

@@ -4,10 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
+import android.widget.*
 import tesis.untref.com.firealerts.R
 import tesis.untref.com.firealerts.alert.presenter.AlertListPresenter
 import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressReducedDataModel
@@ -17,6 +16,7 @@ class AlertListActivity : Activity(), AdapterView.OnItemClickListener {
     private lateinit var alertListPresenter: AlertListPresenter
     private var alertIdsShowing = listOf<Long>()
     private lateinit var deleteButton: Button
+    private lateinit var emptyAlertsTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +24,7 @@ class AlertListActivity : Activity(), AdapterView.OnItemClickListener {
         alertListPresenter = AlertListPresenter(this)
         alertListPresenter.showAlerts()
         deleteButton = findViewById(R.id.delete_all_button)
+        emptyAlertsTextView = findViewById(R.id.empty_alerts_text_view)
         deleteButton.setOnClickListener{alertListPresenter.removeAll()}
     }
 
@@ -34,6 +35,7 @@ class AlertListActivity : Activity(), AdapterView.OnItemClickListener {
         val alertsList = findViewById<ListView>(R.id.listView)
         alertsList.adapter = adapter
         alertsList.onItemClickListener = this
+        emptyAlertsTextView.visibility = if(alertIdsShowing.isEmpty()) VISIBLE else INVISIBLE
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
