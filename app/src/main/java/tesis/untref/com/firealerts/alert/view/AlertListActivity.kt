@@ -10,6 +10,7 @@ import android.widget.*
 import tesis.untref.com.firealerts.R
 import tesis.untref.com.firealerts.alert.presenter.AlertListPresenter
 import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressReducedDataModel
+import tesis.untref.com.firealerts.alert.view.adapter.AlertListAdapter
 
 class AlertListActivity : Activity(), AdapterView.OnItemClickListener {
 
@@ -31,7 +32,8 @@ class AlertListActivity : Activity(), AdapterView.OnItemClickListener {
     fun showAlerts(alerts: List<AlertAddressReducedDataModel>){
         val alertAddresses = alerts.map { it.alertAddress }
         alertIdsShowing = alerts.map { it.alertId }
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alertAddresses)
+        //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alertAddresses)
+        val adapter = AlertListAdapter(alertAddresses, this)
         val alertsList = findViewById<ListView>(R.id.listView)
         alertsList.adapter = adapter
         alertsList.onItemClickListener = this
