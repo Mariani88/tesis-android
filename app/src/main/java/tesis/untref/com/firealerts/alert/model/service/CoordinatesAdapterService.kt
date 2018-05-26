@@ -6,7 +6,7 @@ import tesis.untref.com.firealerts.alert.model.Coordinate
 
 class CoordinatesAdapterService {
 
-    fun toGoogleMapsCoordinate(coordinate: Coordinate): LatLng {
+    fun toDecimalDegreeCoordinate(coordinate: Coordinate): LatLng {
         val latitude = coordinate.latitude
         val longitude = coordinate.longitude
         val transformedLatitude = angularTransform(latitude.degree, latitude.minute, latitude.second, latitude.cardinalPoint)

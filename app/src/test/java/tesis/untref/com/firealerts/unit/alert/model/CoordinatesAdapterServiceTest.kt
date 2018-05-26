@@ -118,7 +118,7 @@ class CoordinatesAdapterServiceTest {
     }
 
     private fun whenAdaptToGoogleMapCoordinate() {
-        googleMapsCoordinate = coordinatesAdapterService.toGoogleMapsCoordinate(coordinate)
+        googleMapsCoordinate = coordinatesAdapterService.toDecimalDegreeCoordinate(coordinate)
     }
 
     private fun givenACoordinate(latitude: Latitude, longitude: Longitude) {

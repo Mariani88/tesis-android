@@ -33,6 +33,7 @@ proguard/
 captures/
 
 # Intellij
+.idea
 *.iml
 .idea/workspace.xml
 .idea/tasks.xml
@@ -42,6 +43,9 @@ captures/
 .idea/caches
 .idea/codeStyles
 .idea/assetWizardSettings.xml
+.idea/misc.xml
+
+
 
 # Keystore files
 *.jks

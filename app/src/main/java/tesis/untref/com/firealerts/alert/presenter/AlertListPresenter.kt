@@ -39,7 +39,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     }
 
     private fun refreshView(alert: Alert) {
-        val googleMapsCoordinate = coordinatesAdapterService.toGoogleMapsCoordinate(alert.coordinate)
+        val googleMapsCoordinate = coordinatesAdapterService.toDecimalDegreeCoordinate(alert.coordinate)
         alertListActivity.goGoogleMapsView(googleMapsCoordinate.latitude, googleMapsCoordinate.longitude)
     }
 

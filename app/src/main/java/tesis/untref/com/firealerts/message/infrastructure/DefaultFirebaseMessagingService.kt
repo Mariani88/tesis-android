@@ -23,7 +23,7 @@ class DefaultFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "Message data payload: " + remoteMessage.data)
         locationService = LocationService(Geocoder(this, Locale.getDefault()))
         val alert = FirebaseRemoteAlertDeserializer().deserialize(remoteMessage.data)
-        locationService.obtainAddress(service.toGoogleMapsCoordinate(alert.coordinate))
+        locationService.obtainAddress(service.toDecimalDegreeCoordinate(alert.coordinate))
                 .doOnSuccess { alert.addAddress(it.toAlertAddress()) }
                 .flatMapCompletable { sqLiteAlertRepository.addAll(listOf(alert)) }
                 .subscribe({ notificationService.sendNotification() }, { logErrorAlertProcessing(it) })

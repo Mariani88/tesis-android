@@ -38,13 +38,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    implementation 'com.google.android.gms:play-services-maps:15.0.0'
+    implementation 'com.google.android.gms:play-services-maps:12.0.0'
     // ViewModel and LiveData
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "android.arch.lifecycle:common-java8:1.1.1"
 
     //firebase
-    implementation 'com.google.firebase:firebase-messaging:15.0.0'
+    implementation 'com.google.firebase:firebase-messaging:12.0.0'
 
     // Room
     implementation "android.arch.persistence.room:runtime:1.0.0"
