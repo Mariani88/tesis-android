@@ -3,16 +3,17 @@ package tesis.untref.com.firealerts.alert.view
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.widget.*
+import android.widget.Button
+import android.widget.ListView
+import android.widget.TextView
 import tesis.untref.com.firealerts.R
 import tesis.untref.com.firealerts.alert.presenter.AlertListPresenter
 import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressReducedDataModel
 import tesis.untref.com.firealerts.alert.view.adapter.AlertListAdapter
 
-class AlertListActivity : Activity(), AdapterView.OnItemClickListener {
+class AlertListActivity : Activity() {
 
     private lateinit var alertListPresenter: AlertListPresenter
     private var alertIdsShowing = listOf<Long>()
@@ -32,16 +33,10 @@ class AlertListActivity : Activity(), AdapterView.OnItemClickListener {
     fun showAlerts(alerts: List<AlertAddressReducedDataModel>){
         val alertAddresses = alerts.map { it.alertAddress }
         alertIdsShowing = alerts.map { it.alertId }
-        //val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, alertAddresses)
-        val adapter = AlertListAdapter(alertAddresses, this)
+        val adapter = AlertListAdapter(alertAddresses, this, alertListPresenter, alertIdsShowing)
         val alertsList = findViewById<ListView>(R.id.listView)
         alertsList.adapter = adapter
-        alertsList.onItemClickListener = this
         emptyAlertsTextView.visibility = if(alertIdsShowing.isEmpty()) VISIBLE else INVISIBLE
-    }
-
-    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        alertListPresenter.showAlert(alertIdsShowing[position] )
     }
 
     fun goGoogleMapsView(latitude: Double, longitude: Double){

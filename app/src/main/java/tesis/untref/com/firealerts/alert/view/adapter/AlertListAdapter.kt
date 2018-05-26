@@ -9,8 +9,11 @@ import android.widget.Button
 import android.widget.ListAdapter
 import android.widget.TextView
 import tesis.untref.com.firealerts.R
+import tesis.untref.com.firealerts.alert.presenter.AlertListPresenter
 
-class AlertListAdapter(private val alerts: List<String>, private val context: Context) : BaseAdapter(), ListAdapter {
+class AlertListAdapter(private val alerts: List<String>, private val context: Context,
+                       private val alertListPresenter: AlertListPresenter,
+                       private val alertIdsShowing: List<Long>) : BaseAdapter(), ListAdapter {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var view = convertView
@@ -23,7 +26,7 @@ class AlertListAdapter(private val alerts: List<String>, private val context: Co
         listItemText.text = alerts[position]
 
         val locationButton = view.findViewById<View>(R.id.location_button) as Button
-        locationButton.setOnClickListener({ })
+        locationButton.setOnClickListener({ alertListPresenter.showAlert(alertIdsShowing[position]) })
 
         return view
     }
