@@ -16,5 +16,5 @@ Esta aplicación corre a partir de Android 4.0.3. Requiere de acceso a Internet 
 
 - Dependencias del proyecto
 
-* Java 8 
-* Gradle 4.1
+Java 8 
+Gradle 4.1
