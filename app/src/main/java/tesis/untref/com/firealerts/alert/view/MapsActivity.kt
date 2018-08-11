@@ -1,6 +1,5 @@
 package tesis.untref.com.firealerts.alert.view
 
-import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
@@ -38,8 +37,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val long = intent.getDoubleExtra("LONG", 0.0)
         val lat = intent.getDoubleExtra("LAT", 0.0)
         mMap = googleMap
-        val myHome = LatLng(lat, long)
-        mMap.addMarker(MarkerOptions().position(myHome).title("Marker in My Home"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myHome, 14f))
+        val alertLocation = LatLng(lat, long)
+        mMap.addMarker(MarkerOptions().position(alertLocation).title("Marker in My Home"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(alertLocation, 14f))
     }
 }

@@ -34,9 +34,6 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { alertListActivity.showAlerts(it) }
 
-    private fun prepareAddressAlertToShow(alerts: List<Alert>): List<AlertAddressReducedDataModel> =
-            alerts.map { AlertAddressReducedDataModel(it.id, it.getAddressString()) }
-
     fun showAlert(alertId: Long) {
         findAlert
                 .find(alertId)
@@ -44,15 +41,18 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
                 .subscribe { refreshView(it) }
     }
 
-    private fun refreshView(alert: Alert) {
-        val googleMapsCoordinate = coordinatesAdapterService.toDecimalDegreeCoordinate(alert.coordinate)
-        alertListActivity.goGoogleMapsView(googleMapsCoordinate.latitude, googleMapsCoordinate.longitude)
-    }
-
     fun removeAll() {
         deleteAlerts()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { alertListActivity.showAlerts(emptyList()) }
+    }
+
+    private fun prepareAddressAlertToShow(alerts: List<Alert>): List<AlertAddressReducedDataModel> =
+            alerts.map { AlertAddressReducedDataModel(it.id, it.getAddressString()) }
+
+    private fun refreshView(alert: Alert) {
+        val googleMapsCoordinate = coordinatesAdapterService.toDecimalDegreeCoordinate(alert.coordinate)
+        alertListActivity.goGoogleMapsView(googleMapsCoordinate.latitude, googleMapsCoordinate.longitude)
     }
 }
