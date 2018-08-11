@@ -52,7 +52,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     fun removeAll() {
         deleteAlerts()
                 .subscribeOn(Schedulers.newThread())
-                .subscribe { }
-        showAlerts()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { alertListActivity.showAlerts(emptyList()) }
     }
 }
