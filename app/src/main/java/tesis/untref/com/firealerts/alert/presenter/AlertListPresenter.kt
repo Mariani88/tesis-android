@@ -5,6 +5,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import tesis.untref.com.firealerts.alert.infrastructure.sqlite.repository.AlertRepositoryProvider
 import tesis.untref.com.firealerts.alert.model.*
+import tesis.untref.com.firealerts.alert.model.action.DeleteAlerts
 import tesis.untref.com.firealerts.alert.model.action.FindAlert
 import tesis.untref.com.firealerts.alert.model.action.FindAlertsSortedByDate
 import tesis.untref.com.firealerts.alert.model.service.CoordinatesAdapterService
@@ -15,12 +16,14 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
 
     private val findAlert: FindAlert
     private val findAlertsSortedByDate: FindAlertsSortedByDate
+    private val deleteAlerts: DeleteAlerts
     private val coordinatesAdapterService: CoordinatesAdapterService
     private val alertRepository: AlertRepository
 
     init {
         alertRepository = AlertRepositoryProvider.getInstance(alertListActivity)
         findAlert = FindAlert(alertRepository)
+        deleteAlerts = DeleteAlerts(alertRepository)
         findAlertsSortedByDate = FindAlertsSortedByDate(alertRepository)
         coordinatesAdapterService = CoordinatesAdapterService()
     }
@@ -38,7 +41,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
         findAlert
                 .find(alertId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ refreshView(it) })
+                .subscribe { refreshView(it) }
     }
 
     private fun refreshView(alert: Alert) {
@@ -47,7 +50,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
     }
 
     fun removeAll() {
-        alertRepository.removeAll()
+        deleteAlerts()
                 .subscribeOn(Schedulers.newThread())
                 .subscribe { }
         showAlerts()

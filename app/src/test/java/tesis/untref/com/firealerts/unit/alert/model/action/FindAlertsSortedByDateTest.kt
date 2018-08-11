@@ -33,9 +33,9 @@ class FindAlertsSortedByDateTest {
     }
 
     private fun thenReturnAllAlertsSortedByDateDesc() {
-        assertThat(storedAlerts.test().assertValue {
+        storedAlerts.test().assertValue {
             it[0] == lastAlert && it[1] == secondAlert && it[2] == firstAlert
-        })
+        }
     }
 
     private fun givenAThreeAlerts() {
