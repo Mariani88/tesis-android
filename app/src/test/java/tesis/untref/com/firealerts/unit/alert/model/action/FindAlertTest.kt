@@ -1,6 +1,7 @@
 package tesis.untref.com.firealerts.unit.alert.model.action
 
 import io.reactivex.Flowable
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import tesis.untref.com.firealerts.alert.model.Alert
 import tesis.untref.com.firealerts.alert.model.AlertRepository
@@ -25,6 +26,7 @@ class FindAlertTest {
     }
 
     private fun thenAlertIsReturned() {
+        assertThat(alertFlowable.test().valueCount()).isEqualTo(1)
         alertFlowable.test().assertValue { it == alert }
     }
 
