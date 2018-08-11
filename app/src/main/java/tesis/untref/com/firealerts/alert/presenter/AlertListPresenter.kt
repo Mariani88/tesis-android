@@ -5,25 +5,25 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import tesis.untref.com.firealerts.alert.infrastructure.sqlite.repository.AlertRepositoryProvider
 import tesis.untref.com.firealerts.alert.model.*
-import tesis.untref.com.firealerts.alert.model.interactor.FindAlertInteractor
+import tesis.untref.com.firealerts.alert.model.action.FindAlert
 import tesis.untref.com.firealerts.alert.model.service.CoordinatesAdapterService
 import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressReducedDataModel
 import tesis.untref.com.firealerts.alert.view.AlertListActivity
 
 class AlertListPresenter(private val alertListActivity: AlertListActivity) {
 
-    private val findAlertInteractor: FindAlertInteractor
+    private val findAlert: FindAlert
     private val coordinatesAdapterService: CoordinatesAdapterService
     private val alertRepository: AlertRepository
 
     init {
         alertRepository = AlertRepositoryProvider.getInstance(alertListActivity)
-        findAlertInteractor = FindAlertInteractor(alertRepository)
+        findAlert = FindAlert(alertRepository)
         coordinatesAdapterService = CoordinatesAdapterService()
     }
 
     fun showAlerts(): Disposable =
-            findAlertInteractor.findAlerts()
+            findAlert.findAlerts()
                     .map { prepareAddressAlertToShow(it) }
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe { alertListActivity.showAlerts(it) }
@@ -32,7 +32,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
             alerts.map { AlertAddressReducedDataModel(it.id, it.getAddressString()) }
 
     fun showAlert(alertId: Long) {
-        findAlertInteractor
+        findAlert
                 .find(alertId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ refreshView(it) })

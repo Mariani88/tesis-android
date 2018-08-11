@@ -1,4 +1,4 @@
-package tesis.untref.com.firealerts.message.infrastructure
+package tesis.untref.com.firealerts.alert.infrastructure.message.firebase
 
 import android.location.Geocoder
 import android.util.Log

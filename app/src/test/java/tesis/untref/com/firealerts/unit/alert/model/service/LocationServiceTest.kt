@@ -1,10 +1,9 @@
-package tesis.untref.com.firealerts.unit.alert.model
+package tesis.untref.com.firealerts.unit.alert.model.service
 
 import android.location.Address
 import android.location.Geocoder
 import com.google.android.gms.maps.model.LatLng
 import junit.framework.Assert
-import junit.framework.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock

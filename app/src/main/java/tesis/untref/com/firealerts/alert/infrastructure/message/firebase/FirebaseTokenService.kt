@@ -1,4 +1,4 @@
-package tesis.untref.com.firealerts.message.infrastructure
+package tesis.untref.com.firealerts.alert.infrastructure.message.firebase
 
 import com.google.firebase.iid.FirebaseInstanceIdService
 import android.content.ContentValues.TAG

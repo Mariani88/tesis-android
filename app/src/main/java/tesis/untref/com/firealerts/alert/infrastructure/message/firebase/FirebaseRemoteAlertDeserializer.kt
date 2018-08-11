@@ -1,4 +1,4 @@
-package tesis.untref.com.firealerts.message.infrastructure
+package tesis.untref.com.firealerts.alert.infrastructure.message.firebase
 
 import org.json.JSONObject
 import tesis.untref.com.firealerts.alert.model.*

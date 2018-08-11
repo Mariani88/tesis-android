@@ -4,7 +4,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import tesis.untref.com.firealerts.MainActivity
-import tesis.untref.com.firealerts.message.infrastructure.topic
+import tesis.untref.com.firealerts.alert.infrastructure.message.firebase.topic
 import java.util.concurrent.TimeUnit
 
 class MainPresenter (private val mainActivity: MainActivity){

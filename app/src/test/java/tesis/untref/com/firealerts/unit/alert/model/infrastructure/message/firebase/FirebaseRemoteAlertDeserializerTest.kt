@@ -1,9 +1,9 @@
-package tesis.untref.com.firealerts.unit.message.infrastructure
+package tesis.untref.com.firealerts.unit.alert.model.infrastructure.message.firebase
 
 import junit.framework.Assert
 import org.junit.Before
 import org.junit.Test
-import tesis.untref.com.firealerts.message.infrastructure.FirebaseRemoteAlertDeserializer
+import tesis.untref.com.firealerts.alert.infrastructure.message.firebase.FirebaseRemoteAlertDeserializer
 import tesis.untref.com.firealerts.alert.model.Alert
 import tesis.untref.com.firealerts.alert.model.Latitude
 import tesis.untref.com.firealerts.alert.model.Longitude

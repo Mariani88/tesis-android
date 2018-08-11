@@ -19,14 +19,14 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name=".message.infrastructure.DefaultFirebaseMessagingService">
+            android:name="tesis.untref.com.firealerts.alert.infrastructure.message.firebase.DefaultFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
 
         <service
-            android:name=".message.infrastructure.FirebaseTokenService">
+            android:name="tesis.untref.com.firealerts.alert.infrastructure.message.firebase.FirebaseTokenService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
