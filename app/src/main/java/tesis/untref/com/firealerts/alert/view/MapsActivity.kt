@@ -38,7 +38,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val lat = intent.getDoubleExtra("LAT", 0.0)
         mMap = googleMap
         val alertLocation = LatLng(lat, long)
-        mMap.addMarker(MarkerOptions().position(alertLocation).title("Marker in My Home"))
+        mMap.addMarker(MarkerOptions().position(alertLocation).title("Marker in alert location"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(alertLocation, 14f))
     }
 }
