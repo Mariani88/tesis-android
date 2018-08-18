@@ -32,7 +32,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".initializer.view.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">

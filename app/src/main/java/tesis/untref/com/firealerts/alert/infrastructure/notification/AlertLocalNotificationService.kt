@@ -4,7 +4,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.NotificationCompat
-import tesis.untref.com.firealerts.MainActivity
+import tesis.untref.com.firealerts.initializer.view.MainActivity
 import tesis.untref.com.firealerts.R
 import java.util.*
 import android.app.PendingIntent

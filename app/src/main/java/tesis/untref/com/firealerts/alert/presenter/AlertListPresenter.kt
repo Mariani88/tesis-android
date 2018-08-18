@@ -3,36 +3,25 @@ package tesis.untref.com.firealerts.alert.presenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import tesis.untref.com.firealerts.alert.infrastructure.sqlite.repository.AlertRepositoryProvider
 import tesis.untref.com.firealerts.alert.model.*
 import tesis.untref.com.firealerts.alert.model.action.DeleteAlerts
 import tesis.untref.com.firealerts.alert.model.action.FindAlert
 import tesis.untref.com.firealerts.alert.model.action.FindAlertsSortedByDate
 import tesis.untref.com.firealerts.alert.model.service.CoordinatesAdapterService
-import tesis.untref.com.firealerts.alert.presenter.dto.AlertAddressReducedDataModel
-import tesis.untref.com.firealerts.alert.view.AlertListActivity
+import tesis.untref.com.firealerts.alert.presenter.reducedModel.AlertAddressReducedDataModel
+import tesis.untref.com.firealerts.alert.view.AlertListView
 
-class AlertListPresenter(private val alertListActivity: AlertListActivity) {
-
-    private val findAlert: FindAlert
-    private val findAlertsSortedByDate: FindAlertsSortedByDate
-    private val deleteAlerts: DeleteAlerts
-    private val coordinatesAdapterService: CoordinatesAdapterService
-    private val alertRepository: AlertRepository
-
-    init {
-        alertRepository = AlertRepositoryProvider.getInstance(alertListActivity)
-        findAlert = FindAlert(alertRepository)
-        deleteAlerts = DeleteAlerts(alertRepository)
-        findAlertsSortedByDate = FindAlertsSortedByDate(alertRepository)
-        coordinatesAdapterService = CoordinatesAdapterService()
-    }
+open class AlertListPresenter(private val alertListView: AlertListView,
+                         private val findAlert: FindAlert,
+                         private val findAlertsSortedByDate: FindAlertsSortedByDate,
+                         private val deleteAlerts: DeleteAlerts,
+                         private val coordinatesAdapterService: CoordinatesAdapterService) {
 
     fun showAlerts(): Disposable =
             findAlertsSortedByDate.findAlerts()
                     .map { prepareAddressAlertToShow(it) }
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { alertListActivity.showAlerts(it) }
+                    .subscribe { alertListView.showAlerts(it) }
 
     fun showAlert(alertId: Long) {
         findAlert
@@ -45,7 +34,7 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
         deleteAlerts()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { alertListActivity.showAlerts(emptyList()) }
+                .subscribe { alertListView.showAlerts(emptyList()) }
     }
 
     private fun prepareAddressAlertToShow(alerts: List<Alert>): List<AlertAddressReducedDataModel> =
@@ -53,6 +42,6 @@ class AlertListPresenter(private val alertListActivity: AlertListActivity) {
 
     private fun refreshView(alert: Alert) {
         val googleMapsCoordinate = coordinatesAdapterService.toDecimalDegreeCoordinate(alert.coordinate)
-        alertListActivity.goGoogleMapsView(googleMapsCoordinate.latitude, googleMapsCoordinate.longitude)
+        alertListView.goGoogleMapsView(googleMapsCoordinate.latitude, googleMapsCoordinate.longitude)
     }
 }

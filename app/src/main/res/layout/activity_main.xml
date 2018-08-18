@@ -4,6 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_image"
-    tools:context="tesis.untref.com.firealerts.MainActivity">
+    tools:context="tesis.untref.com.firealerts.initializer.view.MainActivity">
 
 </android.support.constraint.ConstraintLayout>

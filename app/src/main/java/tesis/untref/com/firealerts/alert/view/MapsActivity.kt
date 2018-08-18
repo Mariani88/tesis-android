@@ -10,10 +10,12 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import tesis.untref.com.firealerts.R
+import tesis.untref.com.firealerts.alert.presenter.MapsActivityPresenter
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapView {
 
     private lateinit var mMap: GoogleMap
+    private lateinit var mapPresenter: MapsActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        mapPresenter = MapsActivityPresenter(this)
     }
 
     /**
@@ -34,10 +37,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
-        val long = intent.getDoubleExtra("LONG", 0.0)
-        val lat = intent.getDoubleExtra("LAT", 0.0)
+        val longitude = intent.getDoubleExtra("LONG", 0.0)
+        val latitude = intent.getDoubleExtra("LAT", 0.0)
         mMap = googleMap
-        val alertLocation = LatLng(lat, long)
+        mapPresenter.showLocationOnGoogleMaps(longitude, latitude)
+    }
+
+    override fun showOnGoogleMaps(latitude: Double, longitude: Double){
+        val alertLocation = LatLng(latitude, longitude)
         mMap.addMarker(MarkerOptions().position(alertLocation).title("Marker in alert location"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(alertLocation, 14f))
     }
