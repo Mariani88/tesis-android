@@ -1,13 +1,6 @@
 package tesis.untref.com.firealerts.unit.alert.presenter
 
 import io.reactivex.Completable
-import io.reactivex.Scheduler
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Function
-import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.Schedulers
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.*

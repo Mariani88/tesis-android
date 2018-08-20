@@ -26,7 +26,7 @@ class AlertListAdapter(private val alerts: List<String>, private val context: Co
         listItemText.text = alerts[position]
 
         val locationButton = view.findViewById<View>(R.id.location_button) as Button
-        locationButton.setOnClickListener({ alertListPresenter.showAlert(alertIdsShowing[position]) })
+        locationButton.setOnClickListener { alertListPresenter.showAlert(alertIdsShowing[position]) }
 
         return view
     }
