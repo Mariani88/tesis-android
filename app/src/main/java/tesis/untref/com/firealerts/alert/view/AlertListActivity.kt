@@ -11,16 +11,18 @@ import android.widget.TextView
 import tesis.untref.com.firealerts.R
 import tesis.untref.com.firealerts.alert.infrastructure.sqlite.repository.AlertRepositoryProvider
 import tesis.untref.com.firealerts.alert.model.action.DeleteAlerts
-import tesis.untref.com.firealerts.alert.model.action.FindAlert
+import tesis.untref.com.firealerts.alert.model.action.FindLocationAlert
 import tesis.untref.com.firealerts.alert.model.action.FindAlertsSortedByDate
 import tesis.untref.com.firealerts.alert.model.service.CoordinatesAdapterService
 import tesis.untref.com.firealerts.alert.presenter.AlertListPresenter
 import tesis.untref.com.firealerts.alert.presenter.reducedModel.AlertAddressReducedDataModel
-import tesis.untref.com.firealerts.alert.view.adapter.AlertListAdapter
+import tesis.untref.com.firealerts.alert.view.alert.list.adapter.AlertListAdapter
+import tesis.untref.com.firealerts.alert.view.alert.list.presenter.AlertListAdapterPresenter
 
 class AlertListActivity : Activity(), AlertListView {
 
     private lateinit var alertListPresenter: AlertListPresenter
+    private lateinit var alertListAdapterPresenter: AlertListAdapterPresenter
     private var alertIdsShowing = listOf<Long>()
     private lateinit var deleteButton: Button
     private lateinit var emptyAlertsTextView: TextView
@@ -38,7 +40,7 @@ class AlertListActivity : Activity(), AlertListView {
     override fun showAlerts(alerts: List<AlertAddressReducedDataModel>){
         val alertAddresses = alerts.map { it.alertAddress }
         alertIdsShowing = alerts.map { it.alertId }
-        val adapter = AlertListAdapter(alertAddresses, this, alertListPresenter, alertIdsShowing)
+        val adapter = AlertListAdapter(alertAddresses, this, alertListAdapterPresenter, alertIdsShowing)
         val alertsList = findViewById<ListView>(R.id.listView)
         alertsList.adapter = adapter
         emptyAlertsTextView.visibility = if(alertIdsShowing.isEmpty()) VISIBLE else INVISIBLE
@@ -54,11 +56,10 @@ class AlertListActivity : Activity(), AlertListView {
 
     private fun createPresenter() {
         val alertRepository = AlertRepositoryProvider.getInstance(this)
-        val findAlert = FindAlert(alertRepository)
+        val findLocationAlert = FindLocationAlert(alertRepository, CoordinatesAdapterService())
         val findAlertsSortedByDate = FindAlertsSortedByDate(alertRepository)
         val deleteAlerts = DeleteAlerts(alertRepository)
-        val coordinatesAdapterService = CoordinatesAdapterService()
-        alertListPresenter = AlertListPresenter(this, findAlert, findAlertsSortedByDate,
-                deleteAlerts, coordinatesAdapterService)
+        alertListAdapterPresenter = AlertListAdapterPresenter(findLocationAlert, this)
+        alertListPresenter = AlertListPresenter(this, findAlertsSortedByDate, deleteAlerts)
     }
 }

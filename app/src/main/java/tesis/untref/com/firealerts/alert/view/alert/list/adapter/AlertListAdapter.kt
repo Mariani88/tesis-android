@@ -1,4 +1,4 @@
-package tesis.untref.com.firealerts.alert.view.adapter
+package tesis.untref.com.firealerts.alert.view.alert.list.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,10 +9,10 @@ import android.widget.Button
 import android.widget.ListAdapter
 import android.widget.TextView
 import tesis.untref.com.firealerts.R
-import tesis.untref.com.firealerts.alert.presenter.AlertListPresenter
+import tesis.untref.com.firealerts.alert.view.alert.list.presenter.AlertListAdapterPresenter
 
 class AlertListAdapter(private val alerts: List<String>, private val context: Context,
-                       private val alertListPresenter: AlertListPresenter,
+                       private val alertListAdapterPresenter: AlertListAdapterPresenter,
                        private val alertIdsShowing: List<Long>) : BaseAdapter(), ListAdapter {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -26,7 +26,7 @@ class AlertListAdapter(private val alerts: List<String>, private val context: Co
         listItemText.text = alerts[position]
 
         val locationButton = view.findViewById<View>(R.id.location_button) as Button
-        locationButton.setOnClickListener { alertListPresenter.showAlert(alertIdsShowing[position]) }
+        locationButton.setOnClickListener { alertListAdapterPresenter.findAlertLocationById(alertIdsShowing[position]) }
 
         return view
     }

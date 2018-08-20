@@ -1,4 +1,4 @@
-package tesis.untref.com.firealerts.unit.main.presenter.action
+package tesis.untref.com.firealerts.unit.main.action
 
 import io.reactivex.Completable
 import org.junit.Test

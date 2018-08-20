@@ -10,7 +10,7 @@ import tesis.untref.com.firealerts.unit.builder.AlertBuilder.Companion.createAle
 import tesis.untref.com.firealerts.unit.extentions.toDate
 import java.time.LocalDateTime
 
-class FindAlertsSortedByDateTest {
+class FindLocationAlertsSortedByDateTest {
 
     private val now = LocalDateTime.now()
     private val yesterday = now.minusDays(1)
